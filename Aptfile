@@ -1,3 +1,7 @@
 unixodbc
 unixodbc-dev
+<<<<<<< HEAD
 libsqliteodbc
+=======
+libsqliteodbc
+>>>>>>> cfce20412cea418270994b07a035768edcf0319f
