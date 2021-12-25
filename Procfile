@@ -1,1 +1,1 @@
-web: gunicorn diep_project.wsgi --log-file -
+web: gunicorn main.wsgi --log-file -
