@@ -1,1 +1,1 @@
-web: gunicorn diep_project.wsgi --log-file -
+web: gunicorn devsearch.wsgi --log-file -
