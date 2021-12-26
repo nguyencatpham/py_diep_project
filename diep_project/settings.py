@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a%x(s@6d0nwag7@z6*qr--1bp0_m=tdz4zax$h!*hg81_0ehfx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # ALLOWED_HOSTS = ['https://hamerapp.herokuapp.com/']
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'tinymce',
     'diep_website',
 ]
 
@@ -79,22 +81,22 @@ WSGI_APPLICATION = 'diep_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd5cfmbt6e0ejn0',
-        'USER': 'vfxqnadejnyhyr',
-        'PASSWORD': '6aba41187fe8f6c83c808cdecab5a32e8e6e1bb56ac881677ddc412f71f078e2',
-        'HOST': 'ec2-3-216-40-16.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd5cfmbt6e0ejn0',
+#         'USER': 'vfxqnadejnyhyr',
+#         'PASSWORD': '6aba41187fe8f6c83c808cdecab5a32e8e6e1bb56ac881677ddc412f71f078e2',
+#         'HOST': 'ec2-3-216-40-16.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -132,6 +134,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/article_image_upload/'

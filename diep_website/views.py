@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Product, Article
 
+from django.http import HttpResponse
+from .resources import ProductResource
+
 # Create your views here.
 def home(request):
     articles = Article.objects.all()
@@ -29,6 +32,16 @@ def checkProductCode(request):
     # return render(request, '404.html')
     # return redirect('/home')
 
+def export(request):
+    product_resource = ProductResource()
+    dataset = product_resource.export()
+    #response = HttpResponse(dataset.csv, content_type='text/csv')
+    #response['Content-Disposition'] = 'attachment; filename="member.csv"'
+    #response = HttpResponse(dataset.json, content_type='application/json')
+    #response['Content-Disposition'] = 'attachment; filename="persons.json"'
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="product.xls"'
+    return response
 
 def page_not_found(request, exception):
     return render(request, '404.html')

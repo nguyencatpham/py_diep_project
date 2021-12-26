@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce import models as tinymce_models
 import uuid
 
 # Create your models here.
@@ -23,7 +24,8 @@ class Product(models.Model):
 class Article(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     title = models.CharField(max_length=500, null=False, blank=False)
-    body = models.TextField(max_length=100000, null=False, blank=False)
+    # body = models.TextField(max_length=100000, null=False, blank=False)
+    body = tinymce_models.HTMLField()
     article_image = models.ImageField(
         null=True, blank=True, default="default.jpg")
     created = models.DateTimeField(auto_now_add=True)

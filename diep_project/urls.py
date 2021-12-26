@@ -14,14 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler404, handler500
+from diep_website import views
+
 
 urlpatterns = [
+    re_path(r'^$', views.home, name="home"),
     path('admin/', admin.site.urls),
-    path('', include('diep_website.urls'))
+    path('tinymce/',include('tinymce.urls')),
+    path('', include('diep_website.urls')),
+    re_path(r'^export-exl/$', views.export, name='export'),
+    re_path(r'^export-csv/$', views.export, name='export'),
 ]
 
 handler404 = 'diep_website.views.page_not_found'
