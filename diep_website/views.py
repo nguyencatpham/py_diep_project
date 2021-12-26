@@ -13,8 +13,8 @@ def article_detail(request, pk):
     
 
 def checkProductCode(request):
-    # request should be ajax and method should be GET.
-    if request.is_ajax and request.method == "GET":
+    # request should be ajax and method should be GET.request.is_ajax and 
+    if request.method == "GET":
         # get the nick name from the client side.
         check_what = request.GET.get("check_what", None)
         # check for the nick name in the database.
@@ -25,15 +25,13 @@ def checkProductCode(request):
             # if nick_name not found, then user can create a new friend.
             return JsonResponse({"valid":False}, status = 200)
 
-    # return JsonResponse({}, status = 400)
-    return render(request, '404.html')
+    return JsonResponse({}, status = 400)
+    # return render(request, '404.html')
+    # return redirect('/home')
 
 
 def page_not_found(request, exception):
-    return render(request, "404.html")
+    return render(request, '404.html')
 
-def server_error(request, exception):
-    return render(request, "500.html")
-
-# def server_error(request, exception, template_name='500.html'):
-#     return render(request, template_name)
+def server_error(request):
+    return render(request, '500.html')

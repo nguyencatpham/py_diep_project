@@ -17,16 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('diep_website.urls'))
 ]
 
+handler404 = 'diep_website.views.page_not_found'
+handler500 = 'diep_website.views.server_error'
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# handler404 = "diep_website.views.page_not_found"
-# handler500 = "diep_website.views.server_error"
-handler404 = 'diep_website.views.page_not_found'
-handler404 = 'diep_website.views.server_error'
