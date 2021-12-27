@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -42,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
-    'tinymce',
+    # 'tinymce',
+    # 'sorl.thumbnail',
+    # 'mce_filebrowser',
+    'rangefilter',
     'diep_website',
 ]
 
@@ -76,7 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'diep_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -136,6 +137,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+# TINYMCE_DEFAULT_CONFIG = {
+#   'file_browser_callback': 'mce_filebrowser'
+# }
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/article_image_upload/'
