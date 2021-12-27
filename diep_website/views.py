@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Product, Article
-
 from django.http import HttpResponse
 from .resources import ProductResource
 
@@ -13,6 +12,14 @@ def home(request):
 def article_detail(request, pk):
     articleObj = Article.objects.get(id=pk)
     return render(request, 'article-detail.html',{"article": articleObj})
+ 
+def checkqrcode(request, pk):
+    productObj = Product.objects.get(product_code = pk)
+    return render(request, 'article-detail-checkqrcode.html',{"product": productObj})
+    # if productObj:
+    #     articleObj = Article.objects.get(id = productObj.category.id)
+    #     return render(request, 'article-detail-checkqrcode.html',{"product": productObj, "article": articleObj})
+    # return render(request, 'article-detail-checkqrcode.html')
     
 
 def checkProductCode(request):
@@ -29,8 +36,6 @@ def checkProductCode(request):
             return JsonResponse({"valid":False}, status = 200)
 
     return JsonResponse({}, status = 400)
-    # return render(request, '404.html')
-    # return redirect('/home')
 
 def export(request):
     product_resource = ProductResource()

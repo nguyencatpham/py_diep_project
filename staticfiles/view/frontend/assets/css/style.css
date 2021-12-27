@@ -3214,6 +3214,10 @@ textarea:focus {
     color: #e9dc9d !important;
     background: black;
 }
+.dropdown-menu>a:active {
+    color: #e9dc9d !important;
+    background: black;
+}
 
 .header-wrapper_navigation>ul>li:hover .dropdown-menu {
     display: block !important;
