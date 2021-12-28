@@ -23,7 +23,7 @@ admin.site.register(Article, ArticleAdmin)
 #     #     return (datetime.date.today, datetime.date.today)
     
 class ProductAdmin(ImportExportModelAdmin):
-    list_display = ('product_name', 'release_name', 'product_code', 'product_price', 'active_link', 'serial_no', 'created')
+    list_display = ('product_name', 'release_name', 'product_price', 'active_link', 'serial_no', 'created')
     search_fields = ["product_name", "release_name", "product_code", "product_price", "serial_no"]
     pass
 
