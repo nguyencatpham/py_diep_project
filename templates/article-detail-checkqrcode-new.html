@@ -67,7 +67,7 @@
 </head>
 
 <body>
-    <header id="header" class="header-wrapper">
+    <!-- <header id="header" class="header-wrapper">
         <div class="container">
             <div class="header-wrapper_inner">
                 <div class="header-wrapper_logo">
@@ -113,7 +113,7 @@
             </a>
         </div>
         <div class="header-overlay"></div>
-    </header>
+    </header> -->
     <script>
         window.addEventListener("load", (function() {
             let _html = ` <div class='popupCheckCode-header'>
@@ -154,6 +154,7 @@
             });
         }));
     </script>
+    {% include 'navbar2.html' %}
     <div class="container mt-4">
         {{article.body|safe}}
     </div>

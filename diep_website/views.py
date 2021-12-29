@@ -4,6 +4,15 @@ from .models import Product, Article
 from django.http import HttpResponse
 from .resources import ProductResource
 
+def navbar(request):
+    return render(request, 'navbar2.html')
+
+def base(request):
+    return render(request, 'base-2.html')
+# Create your views here.
+def index(request):
+    return render(request, 'home-1.html')
+
 # Create your views here.
 def home(request):
     articles = Article.objects.all()
@@ -12,7 +21,7 @@ def home(request):
 def article_detail(request, pk):
     articleObj = Article.objects.get(id=pk)
     articles = Article.objects.all()
-    return render(request, 'article-detail-new.html',{"article": articleObj, "articles": articles})
+    return render(request, 'article-detail-new-2.html',{"article": articleObj, "articles": articles})
  
 def checkqrcode(request, pk):
     productObj = Product.objects.get(product_code = pk)
