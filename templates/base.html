@@ -28,7 +28,7 @@
     <meta property="og:image" alt="Home - Hamer USA" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/upload/logo/favicon-sso.png' %} ">
-    <title>Hamer USA</title>
+    <title>Home - Hamer USA</title>
     <meta name="description" content="Home - Hamer USA">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
@@ -38,6 +38,7 @@
 			}
 		</style>
 	</noscript>
+
     <link href="{% static 'view/frontend/assets/plugins/bootstrap/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'view/frontend/assets/css/all.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'view/frontend/assets/plugins/swiper/swiper.min.css' %}" type="text/css" rel="stylesheet">
@@ -49,9 +50,6 @@
     <link rel="stylesheet" href="{% static 'view/frontend/assets/css/style.css' %}">
 
     <script src="{% static 'view/frontend/assets/js/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'lib/public/js/ngonngu.js' %}" type="text/javascript"></script>
-    <script src="{% static 'lib/public/js/function.js' %}" type="text/javascript"></script>
-    <script src="{% static 'lib/public/lib/login/dangnhap_dangky.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/bootstrap/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/swiper/swiper.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/owlcarousel/owl.carousel.min.js' %}" type="text/javascript"></script>
@@ -60,8 +58,6 @@
     <script src="{% static 'view/frontend/assets/plugins/wow/wow.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/js/lazyload.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/js/footer.js' %}" type="text/javascript"></script>
-    <script src="{% static 'view/frontend/sanpham/js/giohang.js' %}" type="text/javascript"></script>
-    <script src="{% static 'view/frontend/sanpham/js/checkout.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/sweetalert2/sweetalert2.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/vanillajs-scrollspy.min.js' %}" type="text/javascript"></script>
     <script defer type="text/javascript" src="{% static 'view/frontend/assets/js/theme.js' %}"></script>
@@ -72,15 +68,68 @@
 </head>
 
 <body>
-    {% include 'navbar2.html' %} {% block content %} {% endblock content %} {% include 'footer.html' %}
-    <script defer type="text/javascript " src="{% static 'view/frontend/index/js/index.js' %} "></script>
-    <div class='modal fade ' id='popupCheckCode '>
-        <div class='modal-dialog modal-dialog-centered '>
-            <div class='modal-content '>
+    <header id="header" class="header-wrapper">
+        <div class="container">
+            <div class="header-wrapper_inner">
+                <div class="header-wrapper_logo">
+                    <a href="javascript:void(0)" class="callNavigation">
+                        <i class="fal fa-bars"></i>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <img src="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} " alt="Home - Hamer USA">
+                    </a>
+                </div>
+                <div class="header-wrapper_navigation">
+                    <ul id="menu" class="list-unstyled mb-0">
+                        <li>
+                            <a class="active menu-item" href="{% url 'home' %}#home">Home</a>
+                        </li>
+                        <li>
+                            <a class="menu-item" href="{% url 'home' %}#about">About</a>
+                        </li>
+                        <li>
+                            <a class="menu-item" href="{% url 'home' %}#ingredients">Ingredients</a>
+                        </li>
+                        <li>
+                            <a class="menu-item" href="javascript:void(0)">Products</a>
+                            <div class="dropdown-menu">
+                                {% for article in articles %}
+                                <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
+                            </div>
 
+                        </li>
+                        <li>
+                            <a class="menu-item" href="#photo">Photo</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-wrapper_phone">
+                    <a href="tel:15109630068" class="button text-capitalize">Hotline:&nbsp;+15109630068</a>
+                </div>
             </div>
         </div>
+        <div class="header-close">
+            <a href="javascript:void(0)" class="closeNavigation">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+        <div class="header-overlay"></div>
+    </header>
+
+    <div class="template-main">
+        {% block content %}
+        {% endblock content %}
     </div>
+    
+	{% include 'footer.html' %}
+    <script defer type="text/javascript " src="{% static 'view/frontend/index/js/index.js' %} "></script>
+	<div class='modal fade ' id='popupCheckCode '>
+		<div class='modal-dialog modal-dialog-centered '>
+			<div class='modal-content '>
+
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>
