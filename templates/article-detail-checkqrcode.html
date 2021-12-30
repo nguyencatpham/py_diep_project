@@ -40,7 +40,11 @@
     }));
 </script>
 <div class="container mt-4">
-    <h1>{{product.product_price}} vnd</h1>
-    {{article.body|safe}}
+    <span>
+        {% if product %}
+        {% load humanize %}
+        <h2>{{product.product_name}} - {{product.product_price|intcomma}} vnd</h2>
+        {% endif %} 
+    </span> {{article.body|safe}}
 </div>
 {% endblock content %}

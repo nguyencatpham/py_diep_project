@@ -22,7 +22,8 @@ def checkqrcode(request, pk):
     productObj = Product.objects.get(product_code = pk)
     if productObj:
         articleObj = Article.objects.get(id = productObj.article_id)
-        return render(request, 'article-detail-checkqrcode.html', {"product": productObj, "article": articleObj})
+        articles = Article.objects.all()
+        return render(request, 'article-detail-checkqrcode.html', {"product": productObj, "article": articleObj, "articles": articles})
     else:
         return render(request, '404.html')
 

@@ -3126,10 +3126,12 @@ textarea:focus {
     width: 100%;
     height: 100%;
 }
+
 .header-wrapper.scroll-sticky .header-wrapper_inner .header-wrapper_logo a img {
     max-height: 50px !important;
     width: 150px !important;
 }
+
 .header-wrapper .header-wrapper_inner .header-wrapper_logo {
     width: 221px;
     margin-right: 30px;
@@ -3999,6 +4001,29 @@ textarea:focus {
 }
 
 @media screen and (max-width: 1199px) {
+    .dropdown-menu {
+        color: #fff !important;
+        text-transform: uppercase !important;
+        background: white;
+        border-radius: 0px !important;
+        width: 100%;
+        border-left: 0px !important;
+        border-right: 0px !important;
+        z-index: 1049;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    .dropdown-menu>a {
+        background: white;
+        font-weight: bold;
+        padding-left: 20px !important;
+        text-transform: uppercase !important;
+    }
+    .dropdown-menu>a:hover {
+        color: black !important;
+        text-transform: uppercase !important;
+        background: white;
+    }
     .header-wrapper .header-wrapper_inner .header-wrapper_logo a.callNavigation,
     .header-wrapper .header-close .closeNavigation,
     .header-wrapper .header-overlay {
@@ -4051,6 +4076,7 @@ textarea:focus {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+        font-weight: bold;
     }
     .header-wrapper .header-wrapper_inner .header-wrapper_navigation>ul {
         flex-direction: column;
@@ -4073,6 +4099,8 @@ textarea:focus {
     .header-wrapper .header-wrapper_inner .header-wrapper_navigation>ul li a:hover,
     .header-wrapper .header-wrapper_inner .header-wrapper_navigation>ul li a:active {
         color: #000;
+        background: lightgrey !important;
+        transition: .4s all ease-in-out;
     }
     .header-wrapper .header-overlay {
         width: 100%;
