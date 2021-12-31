@@ -29,7 +29,7 @@ DEBUG = False
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # ALLOWED_HOSTS = ['https://hamerapp.herokuapp.com/']
 ALLOWED_HOSTS = ['*']
-
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 # Application definition
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # 'tinymce',
     # 'sorl.thumbnail',
     # 'mce_filebrowser',
-    'rangefilter',
+    # 'rangefilter',
     'diep_website',
 ]
 

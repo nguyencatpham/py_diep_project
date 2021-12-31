@@ -28,7 +28,7 @@
     <meta property="og:image" alt="Home - Hamer USA" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/upload/logo/favicon-sso.png' %} ">
-    <title>Home - Hamer USA</title>
+    <title>Hamer USA</title>
     <meta name="description" content="Home - Hamer USA">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
@@ -75,14 +75,14 @@
                     <a href="javascript:void(0)" class="callNavigation">
                         <i class="fal fa-bars"></i>
                     </a>
-                    <a href="javascript:void(0)">
+                    <a href="{% url 'home' %}">
                         <img src="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} " alt="Home - Hamer USA">
                     </a>
                 </div>
                 <div class="header-wrapper_navigation">
                     <ul id="menu" class="list-unstyled mb-0">
                         <li>
-                            <a class="active menu-item" href="{% url 'home' %}#home">Home</a>
+                            <a class="active menu-item" href="{% url 'home' %}">Home</a>
                         </li>
                         <li>
                             <a class="menu-item" href="{% url 'home' %}#about">About</a>
@@ -99,7 +99,7 @@
 
                         </li>
                         <li>
-                            <a class="menu-item" href="#photo">Photo</a>
+                            <a class="menu-item" href="{% url 'home' %}#photo">Photo</a>
                         </li>
                     </ul>
                 </div>
@@ -117,19 +117,19 @@
     </header>
 
     <div class="template-main">
-        {% block content %}
-        {% endblock content %}
+        {% block content %} {% endblock content %}
+        
     </div>
-    
-	{% include 'footer.html' %}
-    <script defer type="text/javascript " src="{% static 'view/frontend/index/js/index.js' %} "></script>
-	<div class='modal fade ' id='popupCheckCode '>
-		<div class='modal-dialog modal-dialog-centered '>
-			<div class='modal-content '>
 
-			</div>
-		</div>
-	</div>
+    {% include 'footer.html' %}
+    <script defer type="text/javascript " src="{% static 'view/frontend/index/js/index.js' %} "></script>
+    <div class='modal fade ' id='popupCheckCode '>
+        <div class='modal-dialog modal-dialog-centered '>
+            <div class='modal-content '>
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
