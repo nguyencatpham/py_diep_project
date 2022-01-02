@@ -40,10 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 'embed_video',
     'diep_website',
     'import_export',
-    
+    # 'embed_video',    
     # 'rangefilter',
     # 'tinymce',
     # 'sorl.thumbnail',
