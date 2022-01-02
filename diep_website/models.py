@@ -4,6 +4,7 @@ import secrets
 from diep_project import settings
 # from tinymce import models as tinymce_models
 # from tinymce.models import HTMLField
+from embed_video.fields import EmbedVideoField
 
 import uuid
 
@@ -77,3 +78,12 @@ class ReleaseProduct(models.Model):
     
     class Meta:
         verbose_name_plural = "Release Products"
+
+
+
+# class Video(models.Model):
+#     title = models.CharField(max_length=200)
+#     url = EmbedVideoField()
+#     def __str__(self):
+#         return self.title
+    

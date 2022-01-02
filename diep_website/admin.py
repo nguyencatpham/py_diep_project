@@ -28,3 +28,4 @@ class ProductAdmin(ImportExportModelAdmin):
     pass
 
 admin.site.register(ReleaseProduct)
+# admin.site.register(Video)

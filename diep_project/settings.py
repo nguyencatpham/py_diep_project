@@ -29,7 +29,6 @@ DEBUG = False
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # ALLOWED_HOSTS = ['https://hamerapp.herokuapp.com/']
 ALLOWED_HOSTS = ['*']
-SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 # Application definition
 
@@ -41,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    # 'embed_video',
+    'diep_website',
     'import_export',
+    
+    # 'rangefilter',
     # 'tinymce',
     # 'sorl.thumbnail',
     # 'mce_filebrowser',
-    # 'rangefilter',
-    'diep_website',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages'
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
