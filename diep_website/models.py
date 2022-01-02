@@ -4,7 +4,7 @@ import secrets
 from diep_project import settings
 # from tinymce import models as tinymce_models
 # from tinymce.models import HTMLField
-from embed_video.fields import EmbedVideoField
+# from embed_video.fields import EmbedVideoField
 
 import uuid
 
