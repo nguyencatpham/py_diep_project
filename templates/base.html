@@ -12,24 +12,24 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta itemprop="name" content="Home - Hamer USA">
-    <meta itemprop="description" content="Home - Hamer USA">
+    <meta itemprop="name" content="{{webcontent.web_title}}">
+    <meta itemprop="description" content="{{webcontent.web_title}}">
     <meta itemprop="url" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="">
-    <meta name="twitter:title" content="Home - Hamer USA">
-    <meta name="twitter:description" content="Home - Hamer USA">
+    <meta name="twitter:title" content="{{webcontent.web_title}}">
+    <meta name="twitter:description" content="{{webcontent.web_title}}">
     <meta name="twitter:image" content="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} ">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:site_name" content="hamer2u-checking.com">
-    <meta property="og:title" content="Home - Hamer USA">
-    <meta property="og:description" content="Home - Hamer USA">
-    <meta property="og:image" alt="Home - Hamer USA" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
+    <meta property="og:title" content="{{webcontent.web_title}}">
+    <meta property="og:description" content="{{webcontent.web_title}}">
+    <meta property="og:image" alt="{{webcontent.web_title}}" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/upload/logo/favicon-sso.png' %} ">
-    <title>Hamer USA</title>
-    <meta name="description" content="Home - Hamer USA">
+    <title>{{webcontent.web_title}}</title>
+    <meta name="description" content="{{webcontent.web_title}}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
 		<style>
@@ -81,7 +81,21 @@
                 </div>
                 <div class="header-wrapper_navigation">
                     <ul id="menu" class="list-unstyled mb-0">
-                        <li>
+                        {% for menu in main_menus %}
+                            <li>
+                                {% if menu.has_child_article_menu %}
+                                    <a class="menu-item" href="javascript:void(0)">{{menu.name}}</a>
+                                    <div class="dropdown-menu">
+                                        {% for article in articles %}
+                                            <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <a class="menu-item" href="{% url 'home' %}#{{menu.tag}}">{{menu.name}}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                        {% comment %} <li>
                             <a class="active menu-item" href="{% url 'home' %}">Home</a>
                         </li>
                         <li>
@@ -100,11 +114,11 @@
                         </li>
                         <li>
                             <a class="menu-item" href="{% url 'home' %}#photo">Photo</a>
-                        </li>
+                        </li> {% endcomment %}
                     </ul>
                 </div>
                 <div class="header-wrapper_phone">
-                    <a href="tel:15109630068" class="button text-capitalize">Hotline:&nbsp;+15109630068</a>
+                    <a href="tel:{{webcontent.phone_number}}" class="button text-capitalize">Hotline:&nbsp;+{{webcontent.phone_number}}</a>
                 </div>
             </div>
         </div>
@@ -116,7 +130,7 @@
         <div class="header-overlay"></div>
     </header>
 
-    <!-- {% include 'navbar.html' %} -->
+    {% comment %} {% include 'navbar_old.html' %} {% endcomment %}
     <div class="template-main">
         {% block content %} {% endblock content %}
     </div>

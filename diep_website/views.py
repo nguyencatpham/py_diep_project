@@ -5,30 +5,42 @@ from django.http import HttpResponse
 from .resources import ProductResource
 
 # Create your views here.
-def index(request):
-    webcontent = WebContent.objects.all()[0]
-    context = {"webcontent": webcontent}
-    return render(request, 'home.html', {"context": context})
-
-def navbar(request):
-    webcontent = WebContent.objects.all()[0]
-    main_menus = MainMenu.objects.all()
-    article = Article.objects.all()[0]
-    context = {"webcontent": webcontent, "article": article, "main_menus": main_menus}
-    return render(request, 'navbar.html', context)
+# def index(request):
+#     articles = Article.objects.all()
+#     main_menus = MainMenu.objects.all()
+#     webcontent = WebContent.objects.all()[0]
+#     video = YoutubeVideo.objects.all()[0]
+#     context = {"articles": articles,
+#                "webcontent": webcontent,
+#                "main_menus": main_menus,
+#                "video": video,
+#                }
+#     return render(request, 'home.html', context)
 
 def home(request):
     articles = Article.objects.all()
+    main_menus = MainMenu.objects.all()
     webcontent = WebContent.objects.all()[0]
+    video = YoutubeVideo.objects.all()[0]
+    slides = Slide.objects.all()
     context = {"articles": articles,
-               "webcontent": webcontent,}
+               "webcontent": webcontent,
+               "main_menus": main_menus,
+               "video": video,
+               "slides": slides,
+               }
     return render(request, 'home.html', context)
 
 def article_detail(request, pk):
     articleObj = Article.objects.get(id=pk)
     articles = Article.objects.all()
-    context = {"articleObj": articleObj,
-               "articles": articles}
+    webcontent = WebContent.objects.all()[0]
+    main_menus = MainMenu.objects.all()
+    context = {"article": articleObj,
+               "articles": articles,
+               "webcontent": webcontent,
+               "main_menus": main_menus,
+               }
     return render(request, 'article-detail.html', context)
  
 def checkqrcode(request, pk):

@@ -7,7 +7,7 @@ from .forms import *
 
 # Register your models here.
 class MainMenuAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tag')
+    list_display = ('name', 'tag', 'has_child_article_menu')
 admin.site.register(MainMenu, MainMenuAdmin)
 
 admin.site.register(WebContent)
@@ -32,4 +32,6 @@ class ProductAdmin(ImportExportModelAdmin):
     pass
 
 admin.site.register(ReleaseProduct)
+admin.site.register(YoutubeVideo)
+admin.site.register(Slide)
 # admin.site.register(Video)

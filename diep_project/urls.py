@@ -30,8 +30,8 @@ urlpatterns = [
     re_path(r'^export-csv/$', views.export, name='export'),
 ]
 
-handler404 = 'diep_website.views.page_not_found'
-handler500 = 'diep_website.views.server_error'
-
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'diep_website.views.page_not_found'
+handler500 = 'diep_website.views.server_error'

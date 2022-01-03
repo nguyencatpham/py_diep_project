@@ -13,24 +13,24 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta itemprop="name" content="Home - Hamer USA">
-    <meta itemprop="description" content="Home - Hamer USA">
+    <meta itemprop="name" content="{{webcontent.web_title}}">
+    <meta itemprop="description" content="{{webcontent.web_title}}">
     <meta itemprop="url" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="">
-    <meta name="twitter:title" content="Home - Hamer USA">
-    <meta name="twitter:description" content="Home - Hamer USA">
+    <meta name="twitter:title" content="{{webcontent.web_title}}">
+    <meta name="twitter:description" content="{{webcontent.web_title}}">
     <meta name="twitter:image" content="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} ">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
-    <meta property="og:site_name" content="hamer2u-checking.com">
-    <meta property="og:title" content="Home - Hamer USA">
-    <meta property="og:description" content="Home - Hamer USA">
-    <meta property="og:image" alt="Home - Hamer USA" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
+    <meta property="og:site_name" content="{{webcontent.site_name}}">
+    <meta property="og:title" content="{{webcontent.web_title}}">
+    <meta property="og:description" content="{{webcontent.web_title}}">
+    <meta property="og:image" alt="{{webcontent.web_title}}" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/upload/logo/favicon-sso.png' %} ">
-    <title>Home - Hamer USA</title>
-    <meta name="description" content="Home - Hamer USA">
+    <title>{{webcontent.web_title}}</title>
+    <meta name="description" content="{{webcontent.web_title}}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
 		<style>
@@ -53,7 +53,6 @@
     <script src="{% static 'view/frontend/assets/js/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/bootstrap/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/swiper/swiper.min.js' %}" type="text/javascript"></script>
-    {% comment %} <script src="{% static 'view/frontend/assets/plugins/swiper/swiper-bundle.min.js.map' %}" type="text/javascript"></script> {% endcomment %}
     <script src="{% static 'view/frontend/assets/plugins/owlcarousel/owl.carousel.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/fancybox/fancybox.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'view/frontend/assets/plugins/magnific-popup/magnific.js' %}" type="text/javascript"></script>
@@ -83,7 +82,20 @@
                 </div>
                 <div class="header-wrapper_navigation">
                     <ul id="menu" class="list-unstyled mb-0">
+                        {% for menu in main_menus %}
                         <li>
+                            {% if menu.has_child_article_menu %}
+                            <a class="menu-item" href="javascript:void(0)">{{menu.name}}</a>
+                            <div class="dropdown-menu">
+                                {% for article in articles %}
+                                <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
+                            </div>
+                            {% else %}
+                            <a class="menu-item" href="{% url 'home' %}#{{menu.tag}}">{{menu.name}}</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        {% comment %} <li>
                             <a class="active menu-item" href="#home">Home</a>
                         </li>
                         <li>
@@ -102,11 +114,11 @@
                         </li>
                         <li>
                             <a class="menu-item" href="#photo">Photo</a>
-                        </li>
+                        </li> {% endcomment %}
                     </ul>
                 </div>
                 <div class="header-wrapper_phone">
-                    <a href="tel:15109630068" class="button text-capitalize">Hotline:&nbsp;+15109630068</a>
+                    <a href="tel:{{webcontent.phone_number}}" class="button text-capitalize">Hotline:&nbsp;+{{webcontent.phone_number}}</a>
                 </div>
             </div>
         </div>
@@ -138,12 +150,12 @@
                                         <p class="text-inner_description">
                                             THE ORIGINAL HAMMER GINSENG & COFFEE CANDY SUPPLIER SINCE 1999 </p>
                                         <!-- <form action="POST" class="mt-4 row justify-content-center" id="checkCode"> -->
-                                        <form id="check_product_code" method="GET" class="mt-4 row justify-content-center">
+                                        <form id="check_product_code_ignore" method="GET" class="mt-4 row justify-content-center">
                                             {% csrf_token %}
                                             <div class="form-group col-md-8">
-                                                <input class="form-control" required maxlength="100" name="checkCode" type="text" id="checkcode" placeholder="Please enter code...">
+                                                <input class="form-control d-none" required maxlength="100" name="checkCode" type="text" id="checkcode" placeholder="Please enter code...">
                                                 <button id='btnCheckProductCode' type="submit" class="button mt-3">
-													Check
+													Detail
 												</button>
                                             </div>
                                         </form>
@@ -298,15 +310,15 @@
                                 <div class="banner-layout_text text-start">
                                     <div class="text-inner text-start">
                                         <p class="text-inner_subdescription">
-                                            Please contact our Hotline:  +15109630068 if you need support on the issue of counterfeiting / imitation. </p>
+                                            Please contact our Hotline:  +{{webcontent.phone_number}} if you need support on the issue of counterfeiting / imitation. </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-banner-center position-relative wow slideInLeft">
                                 <div class="banner-layout_text text-start">
                                     <div class="text-inner text-start">
-                                        <a href="tel:15109630068" class="button">
-											+15109630068 <i class="fas fa-phone-alt ms-1"></i>
+                                        <a href="tel:{{webcontent.phone_number}}}" class="button">
+											+{{webcontent.phone_number}} <i class="fas fa-phone-alt ms-1"></i>
 										</a>
                                     </div>
                                 </div>
@@ -325,6 +337,7 @@
                 </div>
             </div>
         </div>
+
         <div class="section-img">
             <div class="img-inner position-relative overflow-hidden">
                 <img src="{% static 'public/upload/images/divider.png' %} " class="img-fluid w-100" alt="">
@@ -333,11 +346,18 @@
 
         <div class="section-slide">
             <div class="section-heading">
-                USA
+                {{slides.0.title}}                
             </div>
             <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
+                    {% for slide in slides %}
+                        <div class="swiper-slide">
+                            <div class="img-inner position-relative overflow-hidden">
+                                <img src="{{slide.photoURL}}" alt="">
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% comment %} <div class="swiper-slide">
                         <div class="img-inner position-relative overflow-hidden">
                             <img src="{% static 'public/upload/slide/1_USA/1.jpeg' %} " alt="">
                         </div>
@@ -361,170 +381,13 @@
                         <div class="img-inner position-relative overflow-hidden">
                             <img src="{% static 'public/upload/slide/1_USA/6.PNG' %} " alt="">
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
-        </div>
-
-        <div class="section-slide">
-            <div class="section-heading">
-                37F82K
-            </div>
-            <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/1.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/2.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/3.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/4.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/5.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/2_37F82K/6.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
-
-        <div class="section-slide">
-            <div class="section-heading">
-                E854A9
-            </div>
-            <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/3_E854A9/1.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/3_E854A9/2.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/3_E854A9/3.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/3_E854A9/4.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/3_E854A9/5.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
-
-        <div class="section-slide">
-            <div class="section-heading">
-                M293F2
-            </div>
-            <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/4_M293F2/1.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/4_M293F2/2.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/4_M293F2/3.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/4_M293F2/4.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/4_M293F2/5.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
-
-        <div class="section-slide">
-            <div class="section-heading">
-                G28Q79
-            </div>
-            <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/5_G28Q79/1.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/5_G28Q79/2.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/5_G28Q79/3.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/5_G28Q79/4.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/5_G28Q79/5.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
+        </div>        
 
         <div class="section-dark">
             <div class="container px-0 px-md-3">
@@ -539,7 +402,9 @@
                                 {% comment %} {% 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %}
                                 {% comment %} <iframe src="https://youtu.be/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
                                 {% comment %} <iframe src="{% static 'embed/ZFhh3NVA9TQ' %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
-                                <iframe src="https://www.youtube.com/embed/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                {% comment %} <iframe src="https://www.youtube.com/embed/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
+                                {{video.youtube_embed_content|safe}}
+                                {% comment %} <iframe src="{{video.youtube_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
                             </div>
                         </div>
                     </div>

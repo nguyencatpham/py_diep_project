@@ -1,7 +1,6 @@
 from django.db import models
 import random
 import secrets
-from diep_project import settings
 # from tinymce import models as tinymce_models
 # from tinymce.models import HTMLField
 # from embed_video.fields import EmbedVideoField
@@ -11,17 +10,18 @@ class MainMenu(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=100, null=False, blank=False, verbose_name="Tên Menu")
     tag = models.CharField(max_length=100, null=True, blank=True, verbose_name="Menu Tag")
+    has_child_article_menu = models.BooleanField(default=False, verbose_name="Có chứa menu bài viết")
     def __str__(self):
         return self.name
     class Meta:
-        verbose_name_plural = "Menu (Tiêu đề)"
+        verbose_name_plural = "01. Menu (Tiêu đề)"
 
 class WebContent(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     web_title = models.CharField(max_length=20, null=False, blank=False, verbose_name="Tiêu đề trang web")
     phone_number = models.CharField(max_length=20, null=False, blank=False, verbose_name="Số điện thoại")
     company_name = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên công ty")
-    address = models.CharField(max_length=500, null=False, blank=False, verbose_name="Địa chỉ")
+    address = models.TextField(max_length=500, null=False, blank=False, verbose_name="Địa chỉ")
     email = models.CharField(max_length=500, null=False, blank=False, verbose_name="Email")
     site_name = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên website")
     copy_right = models.CharField(max_length=20, null=False, blank=False, verbose_name="Tên copyright")
@@ -29,12 +29,10 @@ class WebContent(models.Model):
     def __str__(self):
         return self.web_title
     class Meta:
-        verbose_name_plural = "Nội Dung Trang Web"
+        verbose_name_plural = "02. Nội Dung Trang Web"
 
 # Create your models here.
 class Category(models.Model):
-    class Meta:
-        verbose_name_plural = "Danh Mục Sản Phẩm"
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên danh mục")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian tạo")
@@ -42,7 +40,6 @@ class Category(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "Danh Mục"
-
 
 class Article(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -62,7 +59,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Danh mục")
     article_id = models.CharField(max_length=500, null=True, blank=True, editable=False, verbose_name="Mã bài viết")
     product_name = models.CharField(max_length=500, null=True, blank=True, verbose_name="Tên sản phẩm")
-    release_name = models.CharField(max_length=500, null=True, blank=True, verbose_name="Ngày phát hành")
+    release_name = models.CharField(max_length=500, null=True, blank=True, verbose_name="Tên (Đợt phát hành)")
     product_price = models.FloatField(null=True, blank=True, verbose_name="Giá")
     active_link = models.CharField(max_length=500, null=True, blank=True, editable=False, verbose_name="QRCode link")
     serial_no = models.CharField(max_length=9, null=True, blank=True, editable=False)
@@ -77,7 +74,7 @@ class ReleaseProduct(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Bài viết")
-    name = models.CharField(max_length=100, verbose_name="Tên")
+    name = models.CharField(max_length=100, verbose_name="Tên (Đợt phát hành)")
     product_quantity = models.IntegerField(verbose_name="Số lượng sản phẩm")
     price = models.FloatField(verbose_name="Giá")
     domain_name = models.CharField(max_length=500, null=True, blank=True, verbose_name="Tên website")
@@ -106,9 +103,27 @@ class ReleaseProduct(models.Model):
     class Meta:
         verbose_name_plural = "Tạo (Phát hành) Sản Phẩm"
 
-# class Video(models.Model):
-#     title = models.CharField(max_length=200)
-#     url = EmbedVideoField()
-#     def __str__(self):
-#         return self.title
+class YoutubeVideo(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Tiêu đề")
+    youtube_embed_content = models.TextField(null=True, blank=True, verbose_name="Mã nhúng Youtube")
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "Video Youtube"
+        
+class Slide(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Tiêu đề (chung)")
+    photo = models.ImageField(null=True, blank=True, verbose_name="Hình ảnh slide")
+    @property
+    def photoURL(self):
+        try:
+            url = self.photo.url
+        except:
+            url = ''
+        return url
+    
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "Slide hình ảnh"
     

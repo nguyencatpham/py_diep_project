@@ -1,4 +1,3 @@
-{% load static %}
 <header id="header" class="header-wrapper">
     <div class="container">
         <div class="header-wrapper_inner">
@@ -14,7 +13,7 @@
                 <ul id="menu" class="list-unstyled mb-0">
                     {% for menu in main_menus %}
                     <li>
-                        <a class="active menu-item" href="{% url '{home}' %}">{{menu.name}}</a>
+                        <a class="menu-item" href="{% url '{home}' %}">{{menu.name}}</a>
                     </li>
                     {% endfor %}
                     <!-- <li>
