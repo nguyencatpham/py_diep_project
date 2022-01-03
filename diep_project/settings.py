@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'diep_website',
     'import_export',
-    # 'embed_video',    
+    # 'embed_video',
     # 'rangefilter',
     # 'tinymce',
     # 'sorl.thumbnail',

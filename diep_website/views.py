@@ -1,22 +1,35 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Product, Article
+from .models import *
 from django.http import HttpResponse
 from .resources import ProductResource
 
 # Create your views here.
 def index(request):
-    return render(request, 'home.html')
+    webcontent = WebContent.objects.all()[0]
+    context = {"webcontent": webcontent}
+    return render(request, 'home.html', {"context": context})
 
-# Create your views here.
+def navbar(request):
+    webcontent = WebContent.objects.all()[0]
+    main_menus = MainMenu.objects.all()
+    article = Article.objects.all()[0]
+    context = {"webcontent": webcontent, "article": article, "main_menus": main_menus}
+    return render(request, 'navbar.html', context)
+
 def home(request):
     articles = Article.objects.all()
-    return render(request, 'home.html', {"articles": articles})
+    webcontent = WebContent.objects.all()[0]
+    context = {"articles": articles,
+               "webcontent": webcontent,}
+    return render(request, 'home.html', context)
 
 def article_detail(request, pk):
     articleObj = Article.objects.get(id=pk)
     articles = Article.objects.all()
-    return render(request, 'article-detail.html',{"article": articleObj, "articles": articles})
+    context = {"articleObj": articleObj,
+               "articles": articles}
+    return render(request, 'article-detail.html', context)
  
 def checkqrcode(request, pk):
     productObj = Product.objects.get(product_code = pk)

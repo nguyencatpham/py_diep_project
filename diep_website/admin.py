@@ -6,7 +6,11 @@ from import_export.admin import ImportExportModelAdmin
 from .forms import *
 
 # Register your models here.
+class MainMenuAdmin(admin.ModelAdmin):
+    list_display = ('name', 'tag')
+admin.site.register(MainMenu, MainMenuAdmin)
 
+admin.site.register(WebContent)
 admin.site.register(Category)
 
 class ArticleAdmin(admin.ModelAdmin):
