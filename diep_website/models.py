@@ -137,3 +137,12 @@ class Slide(models.Model):
 #          return
 #     def delete(self, *args, **kwargs):
 #         return
+
+class Report(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Xem báo cáo")
+    report_link = models.URLField(max_length=500, null=True, blank=True, verbose_name="link")
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "99. Xem báo cáo"
+    

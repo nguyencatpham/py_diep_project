@@ -38,4 +38,13 @@ class SlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'photo' ,'photoURL')
 admin.site.register(Slide, SlideAdmin)
 
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('name', 'report_url')
+    def view_link(self):
+        return u"<a href='http://127.0.0.1:8000/report'>Xem Báo Cáo</a>"
+    def report_url(self, obj):
+        return u"<a href='http://127.0.0.1:8000/report'>Xem Báo Cáo</a>"
+admin.site.register(Report, ReportAdmin)
+
+
 # admin.site.register(Video)

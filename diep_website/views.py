@@ -54,6 +54,9 @@ def checkProductCode(request):
             return render(request, '404.html')
     return render(request, '404.html')
 
+def report(request):
+    return render(request, 'report.html')
+
 def export(request):
     product_resource = ProductResource()
     dataset = product_resource.export()
