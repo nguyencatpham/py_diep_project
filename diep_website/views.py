@@ -5,18 +5,6 @@ from django.http import HttpResponse
 from .resources import ProductResource
 
 # Create your views here.
-# def index(request):
-#     articles = Article.objects.all()
-#     main_menus = MainMenu.objects.all()
-#     webcontent = WebContent.objects.all()[0]
-#     video = YoutubeVideo.objects.all()[0]
-#     context = {"articles": articles,
-#                "webcontent": webcontent,
-#                "main_menus": main_menus,
-#                "video": video,
-#                }
-#     return render(request, 'home.html', context)
-
 def home(request):
     articles = Article.objects.all()
     main_menus = MainMenu.objects.all()
@@ -46,6 +34,7 @@ def article_detail(request, pk):
 def checkqrcode(request, pk):
     productObj = Product.objects.get(product_code = pk)
     if productObj:
+        productObj.updated(scanned=True)
         articleObj = Article.objects.get(id = productObj.article_id)
         articles = Article.objects.all()
         return render(request, 'article-detail-checkqrcode.html', {"product": productObj, "article": articleObj, "articles": articles})

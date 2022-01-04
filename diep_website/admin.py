@@ -27,11 +27,15 @@ admin.site.register(Article, ArticleAdmin)
 #     #     return (datetime.date.today, datetime.date.today)
     
 class ProductAdmin(ImportExportModelAdmin):
-    list_display = ('product_name', 'release_name', 'product_price', 'active_link', 'serial_no', 'created')
+    list_display = ('product_name', 'release_name', 'product_price', 'serial_no', "scanned", 'created')
     search_fields = ["product_name", "release_name", "product_code", "product_price", "serial_no"]
     pass
 
 admin.site.register(ReleaseProduct)
 admin.site.register(YoutubeVideo)
-admin.site.register(Slide)
+
+class SlideAdmin(admin.ModelAdmin):
+    list_display = ('title', 'photo' ,'photoURL')
+admin.site.register(Slide, SlideAdmin)
+
 # admin.site.register(Video)

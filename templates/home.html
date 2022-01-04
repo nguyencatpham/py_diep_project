@@ -27,10 +27,11 @@
     <meta property="og:title" content="{{webcontent.web_title}}">
     <meta property="og:description" content="{{webcontent.web_title}}">
     <meta property="og:image" alt="{{webcontent.web_title}}" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
+    <meta name="msapplication-TileImage" content="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-270x270.png' %}" />
+    <meta name="description" content="{{webcontent.web_title}}">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/upload/logo/favicon-sso.png' %} ">
     <title>{{webcontent.web_title}}</title>
-    <meta name="description" content="{{webcontent.web_title}}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
 		<style>
@@ -65,7 +66,6 @@
     <link rel="icon" href="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-32x32.png' %}" sizes="32x32" />
     <link rel="icon" href="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-192x192.png' %}" sizes="192x192" />
     <link rel="apple-touch-icon-precomposed" href="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-180x180.png' %}" />
-    <meta name="msapplication-TileImage" content="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-270x270.png' %}" />
 </head>
 
 <body>
@@ -91,11 +91,10 @@
                                 <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
                             </div>
                             {% else %}
-                            <a class="menu-item" href="{% url 'home' %}#{{menu.tag}}">{{menu.name}}</a>
-                            {% endif %}
+                            <a class="menu-item" href="{% url 'home' %}{{menu.tag}}">{{menu.name}}</a> {% endif %}
                         </li>
                         {% endfor %}
-                        {% comment %} <li>
+                        <!-- <li>
                             <a class="active menu-item" href="#home">Home</a>
                         </li>
                         <li>
@@ -114,7 +113,7 @@
                         </li>
                         <li>
                             <a class="menu-item" href="#photo">Photo</a>
-                        </li> {% endcomment %}
+                        </li> -->
                     </ul>
                 </div>
                 <div class="header-wrapper_phone">
@@ -346,18 +345,18 @@
 
         <div class="section-slide">
             <div class="section-heading">
-                {{slides.0.title}}                
+                {{slides.0.title}}
             </div>
             <div class="swiper-container swiper-custom-theme" id="slideSwiper-1">
                 <div class="swiper-wrapper">
                     {% for slide in slides %}
-                        <div class="swiper-slide">
-                            <div class="img-inner position-relative overflow-hidden">
-                                <img src="{{slide.photoURL}}" alt="">
-                            </div>
+                    <div class="swiper-slide">
+                        <div class="img-inner position-relative overflow-hidden">
+                            <img src="{{slide.photoURL}}" alt="">
                         </div>
-                    {% endfor %}
-                    {% comment %} <div class="swiper-slide">
+                    </div>
+                    {% endfor %} {% comment %}
+                    <div class="swiper-slide">
                         <div class="img-inner position-relative overflow-hidden">
                             <img src="{% static 'public/upload/slide/1_USA/1.jpeg' %} " alt="">
                         </div>
@@ -387,7 +386,7 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
-        </div>        
+        </div>
 
         <div class="section-dark">
             <div class="container px-0 px-md-3">
@@ -395,16 +394,12 @@
                     <div class="col-12">
                         <div class="video-inner position-relative overflow-hidden">
                             <div class="video-fit">
-                                {% comment %} {% load embed_video_tags %}
-                                {% video 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %}
-                                {% comment %} {% load embed_video_tags %} {% endcomment %}
-
-                                {% comment %} {% 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %}
-                                {% comment %} <iframe src="https://youtu.be/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
-                                {% comment %} <iframe src="{% static 'embed/ZFhh3NVA9TQ' %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
-                                {% comment %} <iframe src="https://www.youtube.com/embed/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
-                                {{video.youtube_embed_content|safe}}
-                                {% comment %} <iframe src="{{video.youtube_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> {% endcomment %}
+                                {% comment %} {% load embed_video_tags %} {% video 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %} {% comment %} {% load embed_video_tags %} {% endcomment %} {% comment %} {% 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment
+                                %} {% comment %} <iframe src="https://youtu.be/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe> {% endcomment %} {% comment %} <iframe src="{% static 'embed/ZFhh3NVA9TQ' %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe> {% endcomment %} {% comment %} <iframe src="https://www.youtube.com/embed/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe> {% endcomment %} {{video.youtube_embed_content|safe}} {% comment %} <iframe src="{{video.youtube_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe> {% endcomment %}
                             </div>
                         </div>
                     </div>

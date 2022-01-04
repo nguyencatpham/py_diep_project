@@ -63,7 +63,9 @@ class Product(models.Model):
     product_price = models.FloatField(null=True, blank=True, verbose_name="Giá")
     active_link = models.CharField(max_length=500, null=True, blank=True, editable=False, verbose_name="QRCode link")
     serial_no = models.CharField(max_length=9, null=True, blank=True, editable=False)
+    scanned = models.BooleanField(default=False, verbose_name="Đã Scan")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Ngày tạo")
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name="Ngày cập nhật")
     def __str__(self):
         return self.product_name
     class Meta:
@@ -113,7 +115,7 @@ class YoutubeVideo(models.Model):
         
 class Slide(models.Model):
     title = models.CharField(max_length=100, verbose_name="Tiêu đề (chung)")
-    photo = models.ImageField(null=True, blank=True, verbose_name="Hình ảnh slide")
+    photo = models.ImageField(upload_to="slide",null=True, blank=True, verbose_name="Hình ảnh slide")
     @property
     def photoURL(self):
         try:
@@ -126,4 +128,12 @@ class Slide(models.Model):
         return self.title
     class Meta:
         verbose_name_plural = "Slide hình ảnh"
-    
+
+# class Report(models.Model):
+#     category_name = models.CharField(max_length=200, verbose_name="Tên danh mục sản phẩm")
+#     total_product = models.CharField(max_length=200, verbose_name="Tổng số sản phẩm")
+#     total_product_scanned = models.CharField(max_length=200, verbose_name="Sản phẩm đã scan")
+#     def save(self, *args, **kwargs):
+#          return
+#     def delete(self, *args, **kwargs):
+#         return
