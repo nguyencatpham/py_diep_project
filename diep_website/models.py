@@ -5,6 +5,7 @@ import secrets
 # from tinymce.models import HTMLField
 # from embed_video.fields import EmbedVideoField
 import uuid
+from django.utils.safestring import mark_safe
 
 class MainMenu(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -18,18 +19,49 @@ class MainMenu(models.Model):
 
 class WebContent(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    web_title = models.CharField(max_length=20, null=False, blank=False, verbose_name="Tiêu đề trang web")
+    # web info
+    web_title = models.CharField(max_length=200, null=False, blank=False, verbose_name="Tiêu đề trang web")
     phone_number = models.CharField(max_length=20, null=False, blank=False, verbose_name="Số điện thoại")
     company_name = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên công ty")
     address = models.TextField(max_length=500, null=False, blank=False, verbose_name="Địa chỉ")
     email = models.CharField(max_length=500, null=False, blank=False, verbose_name="Email")
     site_name = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên website")
-    copy_right = models.CharField(max_length=20, null=False, blank=False, verbose_name="Tên copyright")
+    copy_right = models.CharField(max_length=200, null=False, blank=False, verbose_name="Tên copyright")
+    
+    # vertical content
+    banner_1 = models.CharField(max_length=200, null=True, blank=True, verbose_name="Nội dung banner 1")
+    banner_2 = models.CharField(max_length=200, null=True, blank=True, verbose_name="Nội dung banner 2")
+    banner_3 = models.CharField(max_length=200, null=True, blank=True, verbose_name="Nội dung banner 3")
+    banner_photo = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh banner chính")
+    
+    counterfeiting = models.TextField(max_length=500, null=True, blank=True, verbose_name="Nội dung chống hàng giả")
+    counterfeiting_photo = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh chống hàng giả")
+    
+    video_photo = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh video")
+    
     
     def __str__(self):
         return self.web_title
     class Meta:
         verbose_name_plural = "02. Nội Dung Trang Web"
+
+class PropertyRight(models.Model):
+    photo_top_left = models.ImageField(upload_to="property_right",null=True, blank=True, verbose_name="Hình ảnh (trên - trái)", default="default.jpg")
+    photo_top_right = models.ImageField(upload_to="property_right",null=True, blank=True, verbose_name="Hình ảnh (trên - phải)", default="default.jpg")
+    
+    title = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề (Nguồn gốc sản phẩm)")
+    
+    content = models.TextField(max_length=700, null=True, blank=True, verbose_name="Nội dung (Nguồn gốc sản phẩm)")
+    photo_main = models.ImageField(upload_to="property_right",null=True, blank=True, verbose_name="Hình ảnh chính")
+    
+    title_1 = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề (Nguồn gốc sản phẩm) (1)")
+    content_1 = models.TextField(max_length=700, null=True, blank=True, verbose_name="Nội dung (Nguồn gốc sản phẩm) (1)")
+    photo_main_1 = models.ImageField(upload_to="property_right",null=True, blank=True, verbose_name="Hình ảnh chính (1)")
+    
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "03. Nguồn gốc sản phẩm"
 
 # Create your models here.
 class Category(models.Model):
@@ -129,18 +161,14 @@ class Slide(models.Model):
     class Meta:
         verbose_name_plural = "Slide hình ảnh"
 
-# class Report(models.Model):
-#     category_name = models.CharField(max_length=200, verbose_name="Tên danh mục sản phẩm")
-#     total_product = models.CharField(max_length=200, verbose_name="Tổng số sản phẩm")
-#     total_product_scanned = models.CharField(max_length=200, verbose_name="Sản phẩm đã scan")
-#     def save(self, *args, **kwargs):
-#          return
-#     def delete(self, *args, **kwargs):
-#         return
-
 class Report(models.Model):
-    name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Xem báo cáo")
+    name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Báo cáo")
     report_link = models.URLField(max_length=500, null=True, blank=True, verbose_name="link")
+    
+    def url_as_link(self):
+        return mark_safe('<a href="%s" target="_blank">Click vào link để xem báo cáo</a>' % (self.report_link))
+    url_as_link.allow_tags = True
+    
     def __str__(self):
         return self.name
     class Meta:

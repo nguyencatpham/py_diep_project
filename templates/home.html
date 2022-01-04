@@ -133,7 +133,7 @@
         <div class="section-banner">
             <div class="banner-inner">
                 <div class="banner-background">
-                    <div class="banner-background_inner lazy" data-src="{% static 'public/upload/banner/Banner-1920x933-v3.png' %} ">
+                    <div class="banner-background_inner lazy" data-src="{{webcontent.banner_photo.url}} ">
                     </div>
                 </div>
                 <div class="banner-layout">
@@ -143,11 +143,11 @@
                                 <div class="banner-layout_text">
                                     <div class="text-inner">
                                         <p class="text-inner_subtitle">
-                                            THE ORIGINAL HAMMER GINSENG & COFFEE CANDY SUPPLIER SINCE 1999 </p>
+                                            {{webcontent.banner_1}}</p>
                                         <h2 class="text-inner_title">
-                                            Hamer Ginseng & Coffee Candy </h2>
+                                            {{webcontent.banner_2}}</h2>
                                         <p class="text-inner_description">
-                                            THE ORIGINAL HAMMER GINSENG & COFFEE CANDY SUPPLIER SINCE 1999 </p>
+                                            {{webcontent.banner_3}}</p>
                                         <!-- <form action="POST" class="mt-4 row justify-content-center" id="checkCode"> -->
                                         <form id="check_product_code_ignore" method="GET" class="mt-4 row justify-content-center">
                                             {% csrf_token %}
@@ -291,6 +291,7 @@
                 </div>
             </div>
         </div>
+
         <div class="section-img">
             <div class="img-inner position-relative overflow-hidden">
                 <img src="{% static 'public/upload/images/divider.png' %} " class="img-fluid w-100" alt="">
@@ -300,7 +301,7 @@
         <div class="section-banner_second">
             <div class="banner-inner">
                 <div class="banner-background">
-                    <div class="banner-background_inner lazy" data-src="{% static 'public/upload/banner/eng-banner.png' %} "></div>
+                    <div class="banner-background_inner lazy" data-src="{{webcontent.counterfeiting_photo.url}} "></div>
                 </div>
                 <div class="banner-layout">
                     <div class="container">
@@ -309,7 +310,7 @@
                                 <div class="banner-layout_text text-start">
                                     <div class="text-inner text-start">
                                         <p class="text-inner_subdescription">
-                                            Please contact our Hotline:  +{{webcontent.phone_number}} if you need support on the issue of counterfeiting / imitation. </p>
+                                            {{webcontent.counterfeiting}} </p>
                                     </div>
                                 </div>
                             </div>
@@ -355,51 +356,28 @@
                             <img src="{{slide.photoURL}}" alt="">
                         </div>
                     </div>
-                    {% endfor %} {% comment %}
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/1_USA/1.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/1_USA/2.jpeg' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/1_USA/4.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/1_USA/5.PNG' %} " alt="">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/slide/1_USA/6.PNG' %} " alt="">
-                        </div>
-                    </div> {% endcomment %}
+                    {% endfor %}
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
         </div>
-
+        
         <div class="section-dark">
             <div class="container px-0 px-md-3">
                 <div class="row g-3">
+                    <img src="{{webcontent.video_photo.url}}" alt="">
                     <div class="col-12">
                         <div class="video-inner position-relative overflow-hidden">
                             <div class="video-fit">
-                                {% comment %} {% load embed_video_tags %} {% video 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %} {% comment %} {% load embed_video_tags %} {% endcomment %} {% comment %} {% 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment
+                                {{video.youtube_embed_content|safe}}
+                                <!-- {% comment %} {% load embed_video_tags %} {% video 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment %} {% comment %} {% load embed_video_tags %} {% endcomment %} {% comment %} {% 'https://www.youtube.com/watch?v=TI-aWWHP3Xw' %} {% endcomment
                                 %} {% comment %} <iframe src="https://youtu.be/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe> {% endcomment %} {% comment %} <iframe src="{% static 'embed/ZFhh3NVA9TQ' %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe> {% endcomment %} {% comment %} <iframe src="https://www.youtube.com/embed/TI-aWWHP3Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe> {% endcomment %} {{video.youtube_embed_content|safe}} {% comment %} <iframe src="{{video.youtube_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe> {% endcomment %}
+                                    allowfullscreen></iframe> {% endcomment %} -->
                             </div>
                         </div>
                     </div>
@@ -413,14 +391,20 @@
                     <div class="col-md-5">
                         <div class="box-image">
                             <div class="image-cover">
-                                <img src="{% static 'public/upload/banner/Banner-501x344-1.png' %} " alt="">
+                                {% if property_right.photo_top_left %}
+                                    <img src="{{property_right.photo_top_left.url}} " alt="">
+                                {% else %}
+                                    <img src="{{property_right.photo_top_left.default.url}} " alt="">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 ps-md-4 mt-5 mt-md-0">
                         <div class="box-image">
                             <div class="image-cover">
-                                <img src="{% static 'public/upload/banner/Banner-674x346-1.png' %} " alt="">
+                                {% if property_right.photo_top_left %}
+                                    <img src="{{property_right.photo_top_right.url}} " alt="">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -433,15 +417,14 @@
                 <div class="row">
                     <div class="col-md-7 pt-4">
                         <div class="section-heading">
-                            PROPERTY RIGHT </div>
+                            {{property_right.title}} </div>
                         <div class="section-description">
-                            &ldquo;The condition of men after the age of 30 has a physiological problem such as decreased libido, erectile dysfunction, premature ejaculation, poor quality and quantity of sperm. According to statistics, every day the clinic at major hospitals receives
-                            hundreds of visits, many times more than 10 years ago.&rdquo;
+                            {{property_right.content}}
                         </div>
                     </div>
                     <div class="col-md-4 ps-md-4">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/banner/SP1-1.png' %} " class="img-fluid" alt="">
+                            <img src="{{property_right.photo_main.url}} " class="img-fluid" alt="">
                         </div>
                     </div>
                 </div>
@@ -567,15 +550,14 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="section-heading">
-                            PROPERTY RIGHT </div>
+                            {{property_right.title_1}} </div>
                         <div class="section-description">
-                            &ldquo;Hamercandy was developed by Sino-USA Collaboration Technology, a total of 13,500 people participated in research and development, after 15 years of research and development. Because it has been confirmed to be very effective in rapidly replenishing
-                            human cell nutrition and delaying the aging process, it has been registered as a patented intellectual property, and has been the preferred cell nutrition product for athletes for several years.&rdquo;
+                            {{property_right.content_1}}
                         </div>
                     </div>
                     <div class="col-md-5 ps-md-4">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{% static 'public/upload/banner/SP3-1.png' %} " class="img-fluid" alt="">
+                            <img src="{{property_right.photo_main_1.url}} " class="img-fluid" alt="">
                         </div>
                     </div>
                 </div>

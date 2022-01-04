@@ -9,10 +9,12 @@ def home(request):
     articles = Article.objects.all()
     main_menus = MainMenu.objects.all()
     webcontent = WebContent.objects.all()[0]
+    property_right = PropertyRight.objects.all()[0]
     video = YoutubeVideo.objects.all()[0]
     slides = Slide.objects.all()
     context = {"articles": articles,
                "webcontent": webcontent,
+               "property_right": property_right,
                "main_menus": main_menus,
                "video": video,
                "slides": slides,
@@ -34,7 +36,8 @@ def article_detail(request, pk):
 def checkqrcode(request, pk):
     productObj = Product.objects.get(product_code = pk)
     if productObj:
-        productObj.updated(scanned=True)
+        productObj.scanned = True
+        productObj.save()
         articleObj = Article.objects.get(id = productObj.article_id)
         articles = Article.objects.all()
         return render(request, 'article-detail-checkqrcode.html', {"product": productObj, "article": articleObj, "articles": articles})
@@ -55,7 +58,22 @@ def checkProductCode(request):
     return render(request, '404.html')
 
 def report(request):
-    return render(request, 'report.html')
+    reports = []
+    for category in Category.objects.all():
+        cate_name = category.name
+        products = Product.objects.filter(category=category)
+        products_scanned = products.filter(scanned=True)
+        # total_product = len(products)
+        total_product = 1000000
+        total_product_scanned = len(products_scanned)
+        row = {
+            "cate_name": cate_name,
+            "total_product": total_product,
+            "total_product_scanned": total_product_scanned
+        }
+        reports.append(row)
+    context = {"reports":reports}
+    return render(request, 'report.html', context)
 
 def export(request):
     product_resource = ProductResource()

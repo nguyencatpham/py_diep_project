@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.urls import reverse
 from .models import *
+from . import views
 from import_export.admin import ImportExportModelAdmin
 # from rangefilter.filters import DateRangeFilter
 # from mce_filebrowser.admin import MCEFilebrowserAdmin
@@ -11,6 +13,8 @@ class MainMenuAdmin(admin.ModelAdmin):
 admin.site.register(MainMenu, MainMenuAdmin)
 
 admin.site.register(WebContent)
+admin.site.register(PropertyRight)
+
 admin.site.register(Category)
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -39,11 +43,8 @@ class SlideAdmin(admin.ModelAdmin):
 admin.site.register(Slide, SlideAdmin)
 
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ('name', 'report_url')
-    def view_link(self):
-        return u"<a href='http://127.0.0.1:8000/report'>Xem Báo Cáo</a>"
-    def report_url(self, obj):
-        return u"<a href='http://127.0.0.1:8000/report'>Xem Báo Cáo</a>"
+    list_display = ('name', 'url_as_link')
+    
 admin.site.register(Report, ReportAdmin)
 
 
