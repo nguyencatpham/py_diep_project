@@ -39,11 +39,29 @@ class WebContent(models.Model):
     
     video_photo = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh video")
     
+    effection_photo = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh công dụng sản phẩm")
+    effection_photo_1 = models.ImageField(upload_to="home_photos",null=True, blank=True, verbose_name="Hình ảnh công dụng sản phẩm (1)")
     
     def __str__(self):
         return self.web_title
     class Meta:
         verbose_name_plural = "02. Nội Dung Trang Web"
+
+class Slide(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Tiêu đề (chung)")
+    photo = models.ImageField(upload_to="slide",null=True, blank=True, verbose_name="Hình ảnh slide")
+    @property
+    def photoURL(self):
+        try:
+            url = self.photo.url
+        except:
+            url = ''
+        return url
+    
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "03. Slide hình ảnh"
 
 class PropertyRight(models.Model):
     photo_top_left = models.ImageField(upload_to="property_right",null=True, blank=True, verbose_name="Hình ảnh (trên - trái)", default="default.jpg")
@@ -61,7 +79,7 @@ class PropertyRight(models.Model):
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name_plural = "03. Nguồn gốc sản phẩm"
+        verbose_name_plural = "04. Nguồn gốc sản phẩm"
 
 class Ingredient(models.Model):
     DISPLAY_TYPE = (
@@ -75,8 +93,37 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
     class Meta:
-        verbose_name_plural = "04. Thành phần"
+        verbose_name_plural = "05. Thành phần"
+        
+class Effection(models.Model):
+    GROUP = (
+        ('one', 'Nhóm 1'),
+        ('two', 'Nhóm 2'),
+    )
+    title = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề")
+    content = models.TextField(max_length=500, null=True, blank=True, verbose_name="Công dụng")
+    group = models.CharField(max_length=200, verbose_name="Nhóm", choices=GROUP)
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "06. Công dụng"
 
+class ProductPhoto(models.Model):
+    number = models.IntegerField(verbose_name="Thứ tự")
+    photo = models.ImageField(upload_to="products",null=True, blank=True, verbose_name="Hình ảnh")
+    alt = models.TextField(max_length=500, null=True, blank=True, verbose_name="Thẻ")
+    def __str__(self):
+        return f'{self.number}'
+    class Meta:
+        verbose_name_plural = "07. Hình ảnh sản phẩm"
+
+class Certificate(models.Model):
+    title = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề")
+    photo = models.ImageField(upload_to="products",null=True, blank=True, verbose_name="Hình ảnh")
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural = "08. Chứng nhận"
 # Create your models here.
 class Category(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -85,7 +132,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     class Meta:
-        verbose_name_plural = "Danh Mục"
+        verbose_name_plural = "09. Danh mục (Loại) sản phẩm"
 
 class Article(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -97,7 +144,7 @@ class Article(models.Model):
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name_plural = "Bài Viết"
+        verbose_name_plural = "10. Bài viết"
 
 class Product(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -115,7 +162,7 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
     class Meta:
-        verbose_name_plural = "Sản Phẩm"
+        verbose_name_plural = "11. Sản phẩm"
 
 #HM-000000
 class ReleaseProduct(models.Model):
@@ -149,7 +196,7 @@ class ReleaseProduct(models.Model):
         super(ReleaseProduct, self).save(*args, **kwargs)
     
     class Meta:
-        verbose_name_plural = "Tạo (Phát hành) Sản Phẩm"
+        verbose_name_plural = "12. Tạo (Phát hành) Sản Phẩm"
 
 class YoutubeVideo(models.Model):
     title = models.CharField(max_length=200, verbose_name="Tiêu đề")
@@ -157,23 +204,16 @@ class YoutubeVideo(models.Model):
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name_plural = "Video Youtube"
+        verbose_name_plural = "14. Video Youtube"
         
-class Slide(models.Model):
-    title = models.CharField(max_length=100, verbose_name="Tiêu đề (chung)")
-    photo = models.ImageField(upload_to="slide",null=True, blank=True, verbose_name="Hình ảnh slide")
-    @property
-    def photoURL(self):
-        try:
-            url = self.photo.url
-        except:
-            url = ''
-        return url
-    
+
+class SEO(models.Model):
+    title = models.CharField(max_length=100, null=True, blank=True, verbose_name="Tiêu đề")
+    tags = models.TextField(verbose_name="Thẻ SEO")
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name_plural = "Slide hình ảnh"
+        verbose_name_plural = "98. SEO"
 
 class Report(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Báo cáo")

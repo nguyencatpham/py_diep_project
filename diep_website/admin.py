@@ -24,6 +24,23 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ('title', 'display_type', 'name', 'photo')
 admin.site.register(Ingredient, IngredientAdmin)
 
+
+class EffectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'group', 'content')
+admin.site.register(Effection, EffectionAdmin)
+
+class ProductPhotoAdmin(admin.ModelAdmin):
+    list_display = ('number', 'photo', 'alt')
+admin.site.register(ProductPhoto, ProductPhotoAdmin)
+
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('title', 'photo')
+admin.site.register(Certificate, CertificateAdmin)
+
+class SEOAdmin(admin.ModelAdmin):
+    list_display = ('title','tags')
+admin.site.register(SEO, SEOAdmin)
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'created')
 admin.site.register(Category, CategoryAdmin)
