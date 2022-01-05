@@ -35,13 +35,12 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            {% load humanize %}
-                            {% for report in reports %}
+                            {% load humanize %} {% for report in reports %}
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
-                                            <img class="h-10 w-10 rounded-full" src="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-192x192.png' %}" alt="Hamer USA">
+                                            <img class="h-10 w-10 rounded-md" src="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-192x192.png' %}" alt="Hamer USA">
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900">
@@ -57,7 +56,7 @@
                                     {{report.total_product_scanned|intcomma}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-800">
                                         Hoạt động
                                     </span>
                                 </td>

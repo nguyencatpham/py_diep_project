@@ -34,12 +34,12 @@
     <title>{{webcontent.web_title}}</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <noscript>
-		<style>
-			body {
-				display: none !important;
-			}
-		</style>
-	</noscript>
+        <style>
+            body {
+                display: none !important;
+            }
+        </style>
+    </noscript>
 
     <link href="{% static 'view/frontend/assets/plugins/bootstrap/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'view/frontend/assets/css/all.min.css' %}" type="text/css" rel="stylesheet">
@@ -154,8 +154,8 @@
                                             <div class="form-group col-md-8">
                                                 <input class="form-control d-none" required maxlength="100" name="checkCode" type="text" id="checkcode" placeholder="Please enter code...">
                                                 <button id='btnCheckProductCode' type="submit" class="button mt-3">
-													Detail
-												</button>
+                                                    Detail
+                                                </button>
                                             </div>
                                         </form>
                                         {% block javascript %}
@@ -301,7 +301,11 @@
         <div class="section-banner_second">
             <div class="banner-inner">
                 <div class="banner-background">
+                    {% if webcontent.counterfeiting_photo %}
                     <div class="banner-background_inner lazy" data-src="{{webcontent.counterfeiting_photo.url}} "></div>
+                    {% else %}
+                    <div class="banner-background_inner lazy" data-src="{% static 'upload/images/default.jpg' %}"></div>
+                    {% endif %}
                 </div>
                 <div class="banner-layout">
                     <div class="container">
@@ -318,8 +322,8 @@
                                 <div class="banner-layout_text text-start">
                                     <div class="text-inner text-start">
                                         <a href="tel:{{webcontent.phone_number}}}" class="button">
-											+{{webcontent.phone_number}} <i class="fas fa-phone-alt ms-1"></i>
-										</a>
+                                            +{{webcontent.phone_number}} <i class="fas fa-phone-alt ms-1"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +357,7 @@
                     {% for slide in slides %}
                     <div class="swiper-slide">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{{slide.photoURL}}" alt="">
+                            <img src="{{slide.photoURL}}" alt="{{slide.title}}">
                         </div>
                     </div>
                     {% endfor %}
@@ -363,11 +367,13 @@
                 <div class="swiper-button-next"></div>
             </div>
         </div>
-        
+
         <div class="section-dark">
             <div class="container px-0 px-md-3">
                 <div class="row g-3">
-                    <img src="{{webcontent.video_photo.url}}" alt="">
+                    {% if webcontent.video_photo %}
+                    <img src="{{webcontent.video_photo.url}}" alt=""> {% else %}
+                    <img src="{% static 'upload/images/default.jpg' %}" alt=""> {% endif %}
                     <div class="col-12">
                         <div class="video-inner position-relative overflow-hidden">
                             <div class="video-fit">
@@ -392,10 +398,8 @@
                         <div class="box-image">
                             <div class="image-cover">
                                 {% if property_right.photo_top_left %}
-                                    <img src="{{property_right.photo_top_left.url}} " alt="">
-                                {% else %}
-                                    <img src="{{property_right.photo_top_left.default.url}} " alt="">
-                                {% endif %}
+                                <img src="{{property_right.photo_top_left.url}} " alt=""> {% else %}
+                                <img src="{{property_right.photo_top_left.default.url}} " alt=""> {% endif %}
                             </div>
                         </div>
                     </div>
@@ -403,8 +407,7 @@
                         <div class="box-image">
                             <div class="image-cover">
                                 {% if property_right.photo_top_left %}
-                                    <img src="{{property_right.photo_top_right.url}} " alt="">
-                                {% endif %}
+                                <img src="{{property_right.photo_top_right.url}} " alt=""> {% endif %}
                             </div>
                         </div>
                     </div>
@@ -417,7 +420,8 @@
                 <div class="row">
                     <div class="col-md-7 pt-4">
                         <div class="section-heading">
-                            {{property_right.title}} </div>
+                            {{property_right.title}}
+                        </div>
                         <div class="section-description">
                             {{property_right.content}}
                         </div>
@@ -431,6 +435,7 @@
             </div>
         </div>
 
+        <!-- INGREDIENTS -->
         <div id="ingredients" class="section-ingredients">
             <div class="bg-fill lazy" data-src="{% static 'public/upload/banner/BG-RED-2.png' %} "></div>
             <div class="ingredients-inner">
@@ -438,69 +443,32 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section-heading text-center">
-                                INGREDIENTS </div>
+                                {{ingredients.0.title}}
+                            </div>
                         </div>
                     </div>
                     <div class="row gx-5">
                         <div class="col-md-6">
+                            {% for ingredient in ingredients_right %}
                             <div class="ingredient-item ingredient-right">
                                 <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Background-of-Cynomorium-Songaricum-300x300.png' %} " alt="">
+                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.name}}">
                                 </div>
                                 <div class="ingredient-text">
-                                    CYNOMORIUM SONGARICUM </div>
+                                    {{ingredient.name}}</div>
                             </div>
-                            <div class="ingredient-item ingredient-right">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Brown-Sugar-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    BROWN SUGAR </div>
-                            </div>
-                            <div class="ingredient-item ingredient-right">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Enzymes-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    ENZYMES </div>
-                            </div>
-                            <div class="ingredient-item ingredient-right">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Coffee-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    COFFEE </div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <div class="col-md-6">
+                            {% for ingredient in ingredients_left %}
                             <div class="ingredient-item ingredient-left">
                                 <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Hydrolyzed-Protein-300x300.png' %} " alt="">
+                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.name}}">
                                 </div>
                                 <div class="ingredient-text">
-                                    HYDROLYZED PROTEIN </div>
+                                    {{ingredient.name}}</div>
                             </div>
-                            <div class="ingredient-item ingredient-left">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Pomegranate-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    POMEGRANATE </div>
-                            </div>
-                            <div class="ingredient-item ingredient-left">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/GINSENG-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    GINSENG </div>
-                            </div>
-                            <div class="ingredient-item ingredient-left">
-                                <div class="ingredient-icon">
-                                    <img src="{% static 'public/upload/banner/Malt-300x300.png' %} " alt="">
-                                </div>
-                                <div class="ingredient-text">
-                                    MALT </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -776,7 +744,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <a href="{% static 'public/upload/banner/certification/IMG_3482.PNG' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
-                            <div style="background-image:url(static/public/upload/banner/certification/IMG_3482.PNG)"></div>
+                            <div style="background-image:url(static/public/upload/banner/certification/IMG_3482.PNG)">
+                            </div>
                         </a>
                         <div class="section-heading text-center mt-3 mt-md-0">
                             Good Manufacturing Practice (GMP) Certificate of Sino – USA Collaboration Technology </div>
@@ -815,59 +784,59 @@
                             <form class="form-landing" id="form-order" action="">
                                 <div class="mb-3">
                                     <input type="text" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter fullname')" autocomplete="off" class="form-control" name="tenkhachhang" id=tenkhachhang "
-										placeholder="Fullname... ">
+										placeholder=" Fullname... ">
 								</div>
-								<div class="mb-3 ">
-									<input type="text " required oninput="setCustomValidity( '') "
-										oninvalid="this.setCustomValidity( 'Please enter address') " autocomplete="off "
-										class="form-control " name="diachi " id="diachi " placeholder="Address... ">
+								<div class=" mb-3 ">
+									<input type=" text " required oninput=" setCustomValidity( '' ) "
+										oninvalid=" this.setCustomValidity( 'Please enter address' ) " autocomplete=" off "
+										class=" form-control " name=" diachi " id=" diachi " placeholder=" Address... ">
 								</div>
-								<div class="row row-5 ">
-									<div class="col-md-6 ">
-										<div class="mb-3 ">
-											<input type="tel " required oninput="setCustomValidity( '') "
-												oninvalid="this.setCustomValidity( 'Please enter phone') "
-												autocomplete="off " class="form-control " name="sdt " id="sdt "
-												minlength="10 " maxlength="15 " placeholder="Phone ">
+								<div class=" row row-5 ">
+									<div class=" col-md-6 ">
+										<div class=" mb-3 ">
+											<input type=" tel " required oninput=" setCustomValidity( '' ) "
+												oninvalid=" this.setCustomValidity( 'Please enter phone' ) "
+												autocomplete=" off " class=" form-control " name=" sdt " id=" sdt "
+												minlength=" 10 " maxlength=" 15 " placeholder=" Phone ">
 										</div>
 									</div>
-									<div class="col-md-6 ">
-										<div class="mb-3 ">
-											<input type="email " required oninput="setCustomValidity( '') "
-												oninvalid="this.setCustomValidity( 'Please enter email') "
-												autocomplete="off " class="form-control " name="email " id="email "
-												placeholder="Email... ">
+									<div class=" col-md-6 ">
+										<div class=" mb-3 ">
+											<input type=" email " required oninput=" setCustomValidity( '' ) "
+												oninvalid=" this.setCustomValidity( 'Please enter email' ) "
+												autocomplete=" off " class=" form-control " name=" email " id=" email "
+												placeholder=" Email... ">
 										</div>
 									</div>
 								</div>
 
-								<div class="mb-3 ">
-									<select required name="id_sanpham " id="id_sanpham " class="form-select ">
+								<div class=" mb-3 ">
+									<select required name=" id_sanpham " id=" id_sanpham " class=" form-select ">
 										<option value=" ">Please choose product</option>
-										<option value="2007 ">3240USD/CARTON/864 CANDY</option>
-										<option value="2006 ">2528USD/CARTON/972 CANDY</option>
-										<option value="2005 ">2347USD/CARTON/864 CANDY</option>
-										<option value="2004 ">2171USD/CARTON/864 CANDY</option>
-										<option value="2003 ">2876USD/CARTON/864 CANDY</option>
+										<option value=" 2007 ">3240USD/CARTON/864 CANDY</option>
+										<option value=" 2006 ">2528USD/CARTON/972 CANDY</option>
+										<option value=" 2005 ">2347USD/CARTON/864 CANDY</option>
+										<option value=" 2004 ">2171USD/CARTON/864 CANDY</option>
+										<option value=" 2003 ">2876USD/CARTON/864 CANDY</option>
 									</select>
 								</div>
-								<div class="mb-3 ">
-									<textarea name="ghichu " class="form-control " id="ghichu " rows="5 "
-										placeholder="Notes... "></textarea>
+								<div class=" mb-3 ">
+									<textarea name=" ghichu " class=" form-control " id=" ghichu " rows=" 5 "
+										placeholder=" Notes... "></textarea>
 								</div>
-								<div class="text-center ">
-									<button type="submit ">Buy now</button>
+								<div class=" text-center ">
+									<button type=" submit ">Buy now</button>
 								</div>
 							</form>
 						</div>
-						<div class="col-md-2 "></div>
-						<div class="col-md-5 mt-3 mt-md-0 ">
-							<div class="img-inner mb-3 position-relative overflow-hidden ">
-								<img src="{% static 'public/upload/banner/SP3-1(1).png' %} " class="img-fluid " alt=" ">
+						<div class=" col-md-2 "></div>
+						<div class=" col-md-5 mt-3 mt-md-0 ">
+							<div class=" img-inner mb-3 position-relative overflow-hidden ">
+								<img src=" {% static 'public/upload/banner/SP3-1(1).png' %} " class=" img-fluid " alt=" ">
 							</div>
-							<div class="section-heading text-center ">
+							<div class=" section-heading text-center ">
 								Hamer </div>
-							<div class="section-description text-center ">
+							<div class=" section-description text-center ">
 								Hamer Ginseng & Coffee Candy </div>
 						</div>
 					</div>
@@ -877,7 +846,7 @@
 
 	</div>
 	{% include 'footer.html' %}
-    <script defer type="text/javascript " src="{% static 'view/frontend/index/js/index.js' %} "></script>
+    <script defer type=" text/javascript " src=" {% static 'view/frontend/index/js/index.js' %} "></script>
 	<div class='modal fade ' id='popupCheckCode '>
 		<div class='modal-dialog modal-dialog-centered '>
 			<div class='modal-content '>

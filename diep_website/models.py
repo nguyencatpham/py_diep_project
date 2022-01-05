@@ -63,6 +63,20 @@ class PropertyRight(models.Model):
     class Meta:
         verbose_name_plural = "03. Nguồn gốc sản phẩm"
 
+class Ingredient(models.Model):
+    DISPLAY_TYPE = (
+        ('left', 'Bên trái'),
+        ('right', 'Bên phải'),
+    )
+    title = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề chính")
+    display_type = models.CharField(max_length=200, verbose_name="Hiển thị", choices=DISPLAY_TYPE)
+    name = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tên thành phần")
+    photo = models.ImageField(upload_to="ingredients",null=True, blank=True, verbose_name="Hình ảnh")
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "04. Thành phần"
+
 # Create your models here.
 class Category(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -76,9 +90,9 @@ class Category(models.Model):
 class Article(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Danh mục")
-    title = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tiêu đề")
+    title = models.CharField(max_length=500, null=False, blank=False, verbose_name="Tên bài viết")
     body = models.TextField(verbose_name="Nội dung")
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Ngày tạo")
     updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.title

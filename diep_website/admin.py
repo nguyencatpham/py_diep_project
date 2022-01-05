@@ -12,12 +12,24 @@ class MainMenuAdmin(admin.ModelAdmin):
     list_display = ('name', 'tag', 'has_child_article_menu')
 admin.site.register(MainMenu, MainMenuAdmin)
 
-admin.site.register(WebContent)
-admin.site.register(PropertyRight)
+class WebcontentAdmin(admin.ModelAdmin):
+    list_display = ('web_title',)
+admin.site.register(WebContent, WebcontentAdmin)
 
-admin.site.register(Category)
+class PropertyRightAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+admin.site.register(PropertyRight, PropertyRightAdmin)
+
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ('title', 'display_type', 'name', 'photo')
+admin.site.register(Ingredient, IngredientAdmin)
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created')
+admin.site.register(Category, CategoryAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created')
     form = ArticleAdminForm
 admin.site.register(Article, ArticleAdmin)
 
@@ -36,7 +48,10 @@ class ProductAdmin(ImportExportModelAdmin):
     pass
 
 admin.site.register(ReleaseProduct)
-admin.site.register(YoutubeVideo)
+
+class YoutubeVideoAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+admin.site.register(YoutubeVideo, YoutubeVideoAdmin)
 
 class SlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'photo' ,'photoURL')
@@ -44,7 +59,6 @@ admin.site.register(Slide, SlideAdmin)
 
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('name', 'url_as_link')
-    
 admin.site.register(Report, ReportAdmin)
 
 

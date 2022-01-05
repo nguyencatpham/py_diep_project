@@ -10,11 +10,18 @@ def home(request):
     main_menus = MainMenu.objects.all()
     webcontent = WebContent.objects.all()[0]
     property_right = PropertyRight.objects.all()[0]
+    
+    ingredients = Ingredient.objects.all()
+    ingredients_left = ingredients.filter(display_type='left')
+    ingredients_right = ingredients.filter(display_type='right')
+    
     video = YoutubeVideo.objects.all()[0]
     slides = Slide.objects.all()
     context = {"articles": articles,
                "webcontent": webcontent,
                "property_right": property_right,
+               "ingredients_left": ingredients_left,
+               "ingredients_right": ingredients_right,
                "main_menus": main_menus,
                "video": video,
                "slides": slides,
@@ -63,8 +70,7 @@ def report(request):
         cate_name = category.name
         products = Product.objects.filter(category=category)
         products_scanned = products.filter(scanned=True)
-        # total_product = len(products)
-        total_product = 1000000
+        total_product = len(products)
         total_product_scanned = len(products_scanned)
         row = {
             "cate_name": cate_name,
