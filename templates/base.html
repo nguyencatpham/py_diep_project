@@ -88,7 +88,7 @@
                             <a class="menu-item" href="javascript:void(0)">{{menu.name}}</a>
                             <div class="dropdown-menu">
                                 {% for article in articles %}
-                                <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
+                                <a class="dropdown-item" href="{% url 'article' article.slug  %}">{{article.title}}</a> {% endfor %}
                             </div>
                             {% else %}
                             <a class="menu-item" href="{% url 'home' %}{{menu.tag}}">{{menu.name}}</a> {% endif %}

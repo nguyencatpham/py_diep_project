@@ -7,6 +7,7 @@ import secrets
 myToken = secrets.token_urlsafe()
 # myToken1 = secrets.token_urlsafe(128)
 print(myToken)
+print(secrets.token_bytes(64))
 # print(myToken.__len__())
 # print(myToken1)
 # print(myToken1.__len__())

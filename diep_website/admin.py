@@ -30,12 +30,16 @@ class EffectionAdmin(admin.ModelAdmin):
 admin.site.register(Effection, EffectionAdmin)
 
 class ProductPhotoAdmin(admin.ModelAdmin):
-    list_display = ('number', 'photo', 'alt')
+    list_display = ('number', 'photo', 'photo_alt')
 admin.site.register(ProductPhoto, ProductPhotoAdmin)
 
 class CertificateAdmin(admin.ModelAdmin):
     list_display = ('title', 'photo')
 admin.site.register(Certificate, CertificateAdmin)
+
+class RetailProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'photo')
+admin.site.register(RetailProduct, RetailProductAdmin)
 
 class SEOAdmin(admin.ModelAdmin):
     list_display = ('title','tags')
@@ -46,7 +50,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created')
+    list_display = ('title', 'slug','created')
     form = ArticleAdminForm
 admin.site.register(Article, ArticleAdmin)
 
@@ -77,6 +81,5 @@ admin.site.register(Slide, SlideAdmin)
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('name', 'url_as_link')
 admin.site.register(Report, ReportAdmin)
-
 
 # admin.site.register(Video)

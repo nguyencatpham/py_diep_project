@@ -4,6 +4,8 @@ from .models import *
 from django.http import HttpResponse
 from .resources import ProductResource
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def home(request):
     articles = Article.objects.all()
@@ -15,21 +17,36 @@ def home(request):
     ingredients_left = ingredients.filter(display_type='left')
     ingredients_right = ingredients.filter(display_type='right')
     
+    efections = Effection.objects.all()
+    efections_group1 = efections.filter(group='one')
+    efections_group2 = efections.filter(group='two')
+    
+    product_photos = ProductPhoto.objects.all()
+    
+    certificate = Certificate.objects.all()[0]
+    retails = RetailProduct.objects.all()
+    
     video = YoutubeVideo.objects.all()[0]
     slides = Slide.objects.all()
-    context = {"articles": articles,
-               "webcontent": webcontent,
-               "property_right": property_right,
-               "ingredients_left": ingredients_left,
-               "ingredients_right": ingredients_right,
-               "main_menus": main_menus,
-               "video": video,
-               "slides": slides,
-               }
+    context = {
+        "main_menus": main_menus,
+        "articles": articles,
+        "webcontent": webcontent,
+        "property_right": property_right,
+        "ingredients_left": ingredients_left,
+        "ingredients_right": ingredients_right,
+        "efections_group1" : efections_group1,
+        "efections_group2" : efections_group2,
+        "product_photos" : product_photos,
+        "certificate" : certificate,
+        "retails" : retails,
+        "video": video,
+        "slides": slides,
+    }
     return render(request, 'home.html', context)
 
 def article_detail(request, pk):
-    articleObj = Article.objects.get(id=pk)
+    articleObj = Article.objects.get(slug=pk)
     articles = Article.objects.all()
     webcontent = WebContent.objects.all()[0]
     main_menus = MainMenu.objects.all()

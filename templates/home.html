@@ -88,32 +88,12 @@
                             <a class="menu-item" href="javascript:void(0)">{{menu.name}}</a>
                             <div class="dropdown-menu">
                                 {% for article in articles %}
-                                <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
+                                <a class="dropdown-item" href="{% url 'article' article.slug  %}">{{article.title}}</a> {% endfor %}
                             </div>
                             {% else %}
                             <a class="menu-item" href="{% url 'home' %}{{menu.tag}}">{{menu.name}}</a> {% endif %}
                         </li>
                         {% endfor %}
-                        <!-- <li>
-                            <a class="active menu-item" href="#home">Home</a>
-                        </li>
-                        <li>
-                            <a class="menu-item" href="#about">About</a>
-                        </li>
-                        <li>
-                            <a class="menu-item" href="#ingredients">Ingredients</a>
-                        </li>
-                        <li>
-                            <a class="menu-item" href="javascript:void(0)">Products</a>
-                            <div class="dropdown-menu">
-                                {% for article in articles %}
-                                <a class="dropdown-item" href="{% url 'article' article.id  %}">{{article.title}}</a> {% endfor %}
-                            </div>
-
-                        </li>
-                        <li>
-                            <a class="menu-item" href="#photo">Photo</a>
-                        </li> -->
                     </ul>
                 </div>
                 <div class="header-wrapper_phone">
@@ -133,8 +113,14 @@
         <div class="section-banner">
             <div class="banner-inner">
                 <div class="banner-background">
-                    <div class="banner-background_inner lazy" data-src="{{webcontent.banner_photo.url}} ">
+                    {% if webcontent.banner_photo %}
+                    <div class="banner-background_inner lazy" data-src="{{webcontent.banner_photo.url}} " alt={{webcontent.banner_photo_alt}}>
                     </div>
+                    {% else %}
+                    <div class="banner-background_inner lazy" data-src="{% static 'images/default.jpg' %} ">
+                    </div>
+                    {% endif %}
+
                 </div>
                 <div class="banner-layout">
                     <div class="container">
@@ -304,7 +290,7 @@
                     {% if webcontent.counterfeiting_photo %}
                     <div class="banner-background_inner lazy" data-src="{{webcontent.counterfeiting_photo.url}} "></div>
                     {% else %}
-                    <div class="banner-background_inner lazy" data-src="{% static 'upload/images/default.jpg' %}"></div>
+                    <div class="banner-background_inner lazy" data-src="{% static 'images/default.jpg' %}"></div>
                     {% endif %}
                 </div>
                 <div class="banner-layout">
@@ -331,7 +317,7 @@
                                 <div class="banner-layout_text">
                                     <div class="text-inner">
                                         <div class="text-image">
-                                            <img src="{% static 'public/upload/images/readmore.png' %} " class="img-fluid" alt="">
+                                            <img src="{% static 'public/upload/images/readmore.png' %} " class="img-fluid" alt="read-more">
                                         </div>
                                     </div>
                                 </div>
@@ -344,7 +330,7 @@
 
         <div class="section-img">
             <div class="img-inner position-relative overflow-hidden">
-                <img src="{% static 'public/upload/images/divider.png' %} " class="img-fluid w-100" alt="">
+                <img src="{% static 'public/upload/images/divider.png' %} " class="img-fluid w-100" alt="divider">
             </div>
         </div>
 
@@ -357,7 +343,9 @@
                     {% for slide in slides %}
                     <div class="swiper-slide">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{{slide.photoURL}}" alt="{{slide.title}}">
+                            {% if slide.photo %}
+                            <img src="{{slide.photo.url}}" alt="{{slide.photo_alt}}"> {% else %}
+                            <img src="{% static 'images/default.jpg'%}" alt="default"> {% endif %}
                         </div>
                     </div>
                     {% endfor %}
@@ -372,8 +360,8 @@
             <div class="container px-0 px-md-3">
                 <div class="row g-3">
                     {% if webcontent.video_photo %}
-                    <img src="{{webcontent.video_photo.url}}" alt=""> {% else %}
-                    <img src="{% static 'upload/images/default.jpg' %}" alt=""> {% endif %}
+                    <img src="{{webcontent.video_photo.url}}" alt="{{webcontent.video_photo_alt}}"> {% else %}
+                    <img src="{% static 'images/default.jpg' %}" alt="default"> {% endif %}
                     <div class="col-12">
                         <div class="video-inner position-relative overflow-hidden">
                             <div class="video-fit">
@@ -398,8 +386,8 @@
                         <div class="box-image">
                             <div class="image-cover">
                                 {% if property_right.photo_top_left %}
-                                <img src="{{property_right.photo_top_left.url}} " alt=""> {% else %}
-                                <img src="{{property_right.photo_top_left.default.url}} " alt=""> {% endif %}
+                                <img src="{{property_right.photo_top_left.url}} " alt="{{property_right.photo_top_left.alt}}"> {% else %}
+                                <img src="{% static 'images/default.jpg' %} " alt="default"> {% endif %}
                             </div>
                         </div>
                     </div>
@@ -407,7 +395,8 @@
                         <div class="box-image">
                             <div class="image-cover">
                                 {% if property_right.photo_top_left %}
-                                <img src="{{property_right.photo_top_right.url}} " alt=""> {% endif %}
+                                <img src="{{property_right.photo_top_right.url}} " alt="{{property_right.photo_top_right.alt}}"> {% else %}
+                                <img src="{% static 'images/default.jpg' %} " alt="default"> {% endif %}
                             </div>
                         </div>
                     </div>
@@ -428,7 +417,9 @@
                     </div>
                     <div class="col-md-4 ps-md-4">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{{property_right.photo_main.url}} " class="img-fluid" alt="">
+                            {% if property_right.photo_main %}
+                            <img src="{{property_right.photo_main.url}} " class="img-fluid" alt="{{property_right.photo_main.alt}}"> {% else %}
+                            <img src="{% static 'images/default.jpg' %} " alt="default"> {% endif %}
                         </div>
                     </div>
                 </div>
@@ -452,7 +443,9 @@
                             {% for ingredient in ingredients_right %}
                             <div class="ingredient-item ingredient-right">
                                 <div class="ingredient-icon">
-                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.name}}">
+                                    {% if ingredient.photo %}
+                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.photo_alt}}"> {% else %}
+                                    <img src="{% static 'images/default.jpg' %} " alt="default"> {% endif %}
                                 </div>
                                 <div class="ingredient-text">
                                     {{ingredient.name}}</div>
@@ -463,7 +456,9 @@
                             {% for ingredient in ingredients_left %}
                             <div class="ingredient-item ingredient-left">
                                 <div class="ingredient-icon">
-                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.name}}">
+                                    {% if ingredient.photo %}
+                                    <img src="{{ingredient.photo.url}} " alt="{{ingredient.photo_alt}}"> {% else %}
+                                    <img src="{% static 'images/default.jpg' %} " alt="alt"> {% endif %}
                                 </div>
                                 <div class="ingredient-text">
                                     {{ingredient.name}}</div>
@@ -478,34 +473,27 @@
         <div class="section-banner_third">
             <div class="banner-inner">
                 <div class="banner-background">
-                    <div class="banner-background_inner lazy" data-src="{% static 'public/upload/banner/Banner-1920x762-2.png' %} ">
+                    {% if webcontent.effection_photo %}
+                    <div class="banner-background_inner lazy" data-src="{{webcontent.effection_photo.url}}">
                     </div>
+                    {% else %}
+                    <div class="banner-background_inner lazy" data-src="{% static 'images/default.jpg' %}">
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="banner-layout">
                     <div class="container">
                         <div class="row justify-content-end">
                             <div class="col-md-8 position-relative">
+                                {% for effection in efections_group1 %}
                                 <div class="mb-5 text-end">
                                     <div class="section-heading">
-                                        Impotence kidney </div>
+                                        {{effection.title}} </div>
                                     <div class="section-description">
-                                        The main component of the Hamer Ginseng &amp; Coffee Candy for Cynomorium, the main effect is used to replenish yang (to treat impotence and back pain), raise tendons and bone, qi and blood, constipation (usually occurs in elderly patients)
+                                        {{effection.content}}
                                     </div>
                                 </div>
-                                <div class="mb-5 text-end">
-                                    <div class="section-heading">
-                                        Full of energy </div>
-                                    <div class="section-description">
-                                        Improve our physical fitness, and maintain a healthy and happy life. Get the amino acid supplement from Khanma&rsquo;s sugar, especially during exercise, which will quickly make your body more agile and powerful.
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <div class="section-heading">
-                                        Nursed back to health </div>
-                                    <div class="section-description">
-                                        Hamer Candy contains Cynomorium polysaccharide, rich in 15 kinds of amino acids, three paste saponins, natural glucocorticoid, 23 kinds of trace elements and various antioxidants. Can inhibit HIV, blood pressure and improve blood circulation.
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -525,7 +513,9 @@
                     </div>
                     <div class="col-md-5 ps-md-4">
                         <div class="img-inner position-relative overflow-hidden">
-                            <img src="{{property_right.photo_main_1.url}} " class="img-fluid" alt="">
+                            {% if property_right.photo_main_1 %}
+                            <img src="{{property_right.photo_main_1.url}} " class="img-fluid" alt="{{property_right.photo_main_1.alt}}"> {% else %}
+                            <img src="{% static 'images/default.jpg' %}" class="img-fluid" alt="default"> {% endif %}
                         </div>
                     </div>
                 </div>
@@ -535,37 +525,27 @@
         <div class="section-banner_fourth">
             <div class="banner-inner">
                 <div class="banner-background">
-                    <div class="banner-background_inner lazy" data-src="{% static 'public/upload/banner/Banner-1920x762-v2.png' %} ">
+                    {% if webcontent.effection_photo_1 %}
+                    <div class="banner-background_inner lazy" data-src="{{webcontent.effection_photo_1.url}}">
                     </div>
+                    {% else %}
+                    <div class="banner-background_inner lazy" data-src="{% static 'images/default.jpg' %}">
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="banner-layout">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-8 position-relative">
+                                {% for effection in efections_group2 %}
                                 <div class="mb-5 text-start">
                                     <div class="section-heading">
-                                        Cell nutrition products </div>
+                                        {{effection.title}} </div>
                                     <div class="section-description">
-                                        As a training for athletes, the rapid replenishment of food, effectively improve the nervous system, strengthen the explosive, reduce fatigue, improve training and competition performance, because the hormone does not contain western medicine and doping
-                                        ingredients, consistent with the needs of participants.
+                                        {{effection.content}}
                                     </div>
                                 </div>
-                                <div class="mb-5 text-start">
-                                    <div class="section-heading">
-                                        Unique formula </div>
-                                    <div class="section-description">
-                                        Hamercandy is made up of valuable Cynomorium plant extract, ginseng saponin, hydrolyzed protein (peptide) and maltose. It can inhibit the destruction of free radicals in the human body, and it can supplement cell nutrition, promote amino acid synthesis
-                                        of protein, regulate cell function.
-                                    </div>
-                                </div>
-                                <div class="text-start">
-                                    <div class="section-heading">
-                                        Reports and permits </div>
-                                    <div class="section-description">
-                                        &ldquo;ALS Laboratory Group (Singapore) laboratory report: no impotence Western medicine or doping ingredients&rdquo;, &ldquo;halal product certification&rdquo;, &ldquo;Ministry of Health food safety and quality control documents. This product is classified
-                                        as food without a MAL number &ldquo;Certificate.
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -573,6 +553,7 @@
             </div>
         </div>
 
+        <!-- PRODUCT PHOTO -->
         <div id="photo" class="section-gallery">
             <div class="bg-fill lazy" data-src="{% static 'public/upload/banner/BG-RED-2.png' %} "></div>
             <div class="gallery-inner">
@@ -586,51 +567,25 @@
                         </div>
                     </div>
                     <div class="row row-col-15 row-cols-2 row-cols-md-4">
+                        {% for product_photo in product_photos %} {% if product_photo.photo %}
                         <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/1.jpeg' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/1.jpeg)"></div>
-                                </a>
+                            <a href="{{product_photo.photo.url}}" class="image-link img-inner position-relative overflow-hidden">
+                                <div style="background-image: url({{product_photo.photo.url}})"></div>
+                            </a>
                         </div>
+                        {% else %}
                         <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/2.jpeg' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(/static/public/upload/anhchungnhan/2.jpeg)"></div>
-                                </a>
+                            <a href="{% static 'images/default.jpg' %}" class="image-link img-inner position-relative overflow-hidden">
+                                <div style="background-image: url(/static/images/default.jpg)"></div>
+                            </a>
                         </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/3.jpeg' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(/static/public/upload/anhchungnhan/3.jpeg)"></div>
-                                </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/4.PNG' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/4.PNG)"></div>
-                                </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/5.PNG' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/5.PNG)"></div>
-                                </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/6.JPG' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/6.JPG)"></div>
-                                </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/7.JPG' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/7.JPG)"></div>
-                                </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% static 'public/upload/anhchungnhan/8.jpg' %}" class="image-link img-inner position-relative overflow-hidden">
-                                <div style="background-image: url(static/public/upload/anhchungnhan/8.jpg)"></div>
-                                </a>
-                        </div>
+                        {% endif %} {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- RETAIL -->
         <div class="section-product">
             <div class="bg-fill lazy" data-src="{% static 'public/upload/banner/banner-6.jpg' %}"></div>
             <div class="product-inner swiper-custom-theme">
@@ -645,81 +600,29 @@
                         <div class="col">
                             <div class="swiper-container" id="swiper-Product">
                                 <div class="swiper-wrapper">
+                                    {% for retail in retails %}
                                     <div class="swiper-slide">
                                         <div class="card card-product">
                                             <div class="card-header position-relative">
-                                                <img class="img-fluid swiper-lazy" src="{% static 'public/upload/images/hinhsanpham/3240usdcarton864-candy-65011636079143.jpg' %}" alt="3240USD/CARTON/864 CANDY">
+                                                {% if retail.photo %}
+                                                <img class="img-fluid swiper-lazy" src="{{retail.photo.url}}" alt="{{retail.photo_alt}}">
                                                 <div class="swiper-lazy-preloader"></div>
+                                                {% else %}
+                                                <img class="img-fluid swiper-lazy" src="{% static 'images/default.jpg' %}" alt="default">
+                                                <div class="swiper-lazy-preloader"></div>
+                                                {% endif %}
                                             </div>
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    3240USD/CARTON/864 CANDY </div>
+                                                    {{retail.name}} </div>
                                             </div>
                                             <div class="card-footer">
-                                                <a href="javascript:void(0)" data-id="2007" data-name="3240USD/CARTON/864 CANDY" class="button callModalOrderProduct">Buy now</a>
+                                                <!-- data-id="2007" data-name="3240USD/CARTON/864 CANDY" class="button callModalOrderProduct -->
+                                                <a href="javascript:void(0)" class="button callModalOrderProduct">Buy now</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">
-                                        <div class="card card-product">
-                                            <div class="card-header position-relative">
-                                                <img class="img-fluid swiper-lazy" src="{% static 'public/upload/images/hinhsanpham/2528usdcarton972-candy-29741636079126.jpg' %}" alt="2528USD/CARTON/972 CANDY">
-                                                <div class="swiper-lazy-preloader"></div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    2528USD/CARTON/972 CANDY </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <a href="javascript:void(0)" data-id="2006" data-name="2528USD/CARTON/972 CANDY" class="button callModalOrderProduct">Buy now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card card-product">
-                                            <div class="card-header position-relative">
-                                                <img class="img-fluid swiper-lazy" src="{% static 'public/upload/images/hinhsanpham/2347usdcarton864-candy-6791636079111.jpg' %}" alt="2347USD/CARTON/864 CANDY">
-                                                <div class="swiper-lazy-preloader"></div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    2347USD/CARTON/864 CANDY </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <a href="javascript:void(0)" data-id="2005" data-name="2347USD/CARTON/864 CANDY" class="button callModalOrderProduct">Buy now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card card-product">
-                                            <div class="card-header position-relative">
-                                                <img class="img-fluid swiper-lazy" src="{% static 'public/upload/images/hinhsanpham/2171usdcarton864-candy-14351636079076.jpg' %}" alt="2171USD/CARTON/864 CANDY">
-                                                <div class="swiper-lazy-preloader"></div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    2171USD/CARTON/864 CANDY </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <a href="javascript:void(0)" data-id="2004" data-name="2171USD/CARTON/864 CANDY" class="button callModalOrderProduct">Buy now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card card-product">
-                                            <div class="card-header position-relative">
-                                                <img class="img-fluid swiper-lazy" src="{% static 'public/upload/images/hinhsanpham/2876usdcarton864-candy-50131636077288.jpg' %}" alt="2876USD/CARTON/864 CANDY">
-                                                <div class="swiper-lazy-preloader"></div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    2876USD/CARTON/864 CANDY </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <a href="javascript:void(0)" data-id="2003" data-name="2876USD/CARTON/864 CANDY" class="button callModalOrderProduct">Buy now</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                                 <div class="swiper-pagination"></div>
                             </div>
@@ -731,18 +634,33 @@
             </div>
         </div>
 
+        <!-- CERTIFICATE -->
         <div class="section-gap py-5 section-bg_red__dark">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                        <a href="{% static 'public/upload/banner/certification/IMG_3482.PNG' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
-                            <div style="background-image:url(static/public/upload/banner/certification/IMG_3482.PNG)">
+                    <div class="col-12 col-md-4">
+                        {% if certificate.photo %}
+                        <a href="{{certificate.photo.url}}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
+                            <div class="d-flex">
+                                <img class="img-fluid" src="{{certificate.photo.url}}" alt="{{certificate.photo_alt}}">
                             </div>
+                            <!-- <div style="background-image:url({{certificate.photo.url}})"></div> -->
                         </a>
-                        <div class="section-heading text-center mt-3 mt-md-0">
-                            Good Manufacturing Practice (GMP) Certificate of Sino – USA Collaboration Technology </div>
+                        {% else %}
+                        <a href="{% static 'images/default.jpg' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
+                            <div style="background-image:url(static/images/default.jpg)"></div>
+                        </a>
+                        {% endif %}
+                        <!-- <div class="section-heading text-center mt-3 mt-md-0">
+                            {{certificate.title}}</div> -->
                     </div>
-                    <div class="col-md-4">
+
+                    <div class="col-12 col-md-8 d-flex align-items-end">
+                        <div class="section-heading text-center mt-3 mt-md-0">
+                            {{certificate.title}}
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4">
                         <a href="{% static 'public/upload/banner/certification/6AAC6BE1-7873-4FE9-A9FE-4A794A62D46E.jpeg' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
                             <div style="background-image:url(static/public/upload/banner/certification/6AAC6BE1-7873-4FE9-A9FE-4A794A62D46E.jpeg)">
                             </div>
@@ -757,11 +675,12 @@
                         </a>
                         <div class="section-heading text-center mt-3 mt-md-0">
                             Toxicology Laboratory Certificate Of Analysis </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
 
+        <!-- ORDER -->
         <div class="section-gap section-form">
             <div class="form-inner w-100">
                 <div class="container">
@@ -805,11 +724,14 @@
 								<div class=" mb-3 ">
 									<select required name=" id_sanpham " id=" id_sanpham " class=" form-select ">
 										<option value=" ">Please choose product</option>
-										<option value=" 2007 ">3240USD/CARTON/864 CANDY</option>
+                                        {% for retail in retails %}
+                                        <option value="{{retail.name}} ">{{retail.name}}</option>  
+                                        {% endfor %}
+										<!-- <option value=" 2007 ">3240USD/CARTON/864 CANDY</option>
 										<option value=" 2006 ">2528USD/CARTON/972 CANDY</option>
 										<option value=" 2005 ">2347USD/CARTON/864 CANDY</option>
 										<option value=" 2004 ">2171USD/CARTON/864 CANDY</option>
-										<option value=" 2003 ">2876USD/CARTON/864 CANDY</option>
+										<option value=" 2003 ">2876USD/CARTON/864 CANDY</option> -->
 									</select>
 								</div>
 								<div class=" mb-3 ">
@@ -824,7 +746,12 @@
 						<div class=" col-md-2 "></div>
 						<div class=" col-md-5 mt-3 mt-md-0 ">
 							<div class=" img-inner mb-3 position-relative overflow-hidden ">
-								<img src=" {% static 'public/upload/banner/SP3-1(1).png' %} " class=" img-fluid " alt=" ">
+                                {% if webcontent.order_photo %}
+								    <img src="{{webcontent.order_photo.url}} " class=" img-fluid " alt="{{webcontent.order_photo_alt}} ">
+                                {% else %}
+								    <img src=" {% static 'images/default.jpg' %} " class=" img-fluid " alt="default ">
+                                {% endif %}
+                                
 							</div>
 							<div class=" section-heading text-center ">
 								Hamer </div>
@@ -847,5 +774,4 @@
 		</div>
 	</div>
 </body>
-
 </html>
