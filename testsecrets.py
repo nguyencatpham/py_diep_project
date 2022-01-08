@@ -15,3 +15,4 @@ print(secrets.token_bytes(64))
 # cubes = [1,8,27,65,125]
 # cubes[3] = 64
 # print(cubes)
+# python -Xutf8 manage.py dumpdata > data.json
