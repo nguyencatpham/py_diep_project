@@ -64,7 +64,16 @@ def checkqrcode(request, pk):
         productObj.save()
         articleObj = Article.objects.get(id = productObj.article_id)
         articles = Article.objects.all()
-        return render(request, 'article-detail-checkqrcode.html', {"product": productObj, "article": articleObj, "articles": articles})
+        webcontent = WebContent.objects.all()[0]
+        main_menus = MainMenu.objects.all()
+        context = {
+            "product": productObj,
+            "article": articleObj,
+            "articles": articles,
+            "webcontent": webcontent,
+            "main_menus": main_menus,
+        }
+        return render(request, 'article-detail-checkqrcode.html', context)
     else:
         return render(request, '404.html')
 
