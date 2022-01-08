@@ -90,8 +90,9 @@
                                 {% for article in articles %}
                                 <a class="dropdown-item" href="{% url 'article' article.slug  %}">{{article.title}}</a> {% endfor %}
                             </div>
-                            {% else %}
-                            <a class="menu-item" href="{% url 'home' %}{{menu.tag}}">{{menu.name}}</a> {% endif %}
+                            {% else %} {% if menu.tag != None %}
+                            <a class="menu-item" href="{% url 'home' %}{{menu.tag}}">{{menu.name}}</a> {% else %}
+                            <a class="menu-item" href="{% url 'home' %}">{{menu.name}}</a> {% endif %} {% endif %}
                         </li>
                         {% endfor %}
                         <!-- <li>

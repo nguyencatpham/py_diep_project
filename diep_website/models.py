@@ -247,7 +247,7 @@ class SEO(models.Model):
 
 class Report(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Báo cáo")
-    report_link = models.URLField(max_length=500, null=True, blank=True, verbose_name="link")
+    report_link = models.CharField(max_length=500, null=True, blank=True, verbose_name="link")
     
     def url_as_link(self):
         return mark_safe('<a href="%s" target="_blank">Click vào link để xem báo cáo</a>' % (self.report_link))
