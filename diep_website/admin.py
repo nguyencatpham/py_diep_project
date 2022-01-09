@@ -24,17 +24,16 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ('title', 'display_type', 'name', 'photo')
 admin.site.register(Ingredient, IngredientAdmin)
 
-
 class EffectionAdmin(admin.ModelAdmin):
     list_display = ('title', 'group', 'content')
 admin.site.register(Effection, EffectionAdmin)
 
 class ProductPhotoAdmin(admin.ModelAdmin):
-    list_display = ('number', 'photo', 'photo_alt')
+    list_display = ('number', 'photo', 'is_display', 'photo_alt')
 admin.site.register(ProductPhoto, ProductPhotoAdmin)
 
 class CertificateAdmin(admin.ModelAdmin):
-    list_display = ('title', 'photo')
+    list_display = ('title', 'is_display' ,'photo')
 admin.site.register(Certificate, CertificateAdmin)
 
 class RetailProductAdmin(admin.ModelAdmin):
@@ -67,7 +66,6 @@ class ProductAdmin(ImportExportModelAdmin):
     list_display = ('product_name', 'release_name', 'product_price', 'serial_no', "scanned", 'created')
     search_fields = ["product_name", "release_name", "product_code", "product_price", "serial_no"]
     pass
-
 admin.site.register(ReleaseProduct)
 
 class YoutubeVideoAdmin(admin.ModelAdmin):

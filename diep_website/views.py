@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     articles = Article.objects.all()
     main_menus = MainMenu.objects.all()
-    webcontent = WebContent.objects.all()[0]
-    property_right = PropertyRight.objects.all()[0]
+    webcontent = WebContent.objects.all()
+    property_right = PropertyRight.objects.all()
     
     ingredients = Ingredient.objects.all()
     ingredients_left = ingredients.filter(display_type='left')
@@ -23,24 +23,24 @@ def home(request):
     
     product_photos = ProductPhoto.objects.all()
     
-    certificate = Certificate.objects.all()[0]
+    certificates = Certificate.objects.all()
     retails = RetailProduct.objects.all()
     
-    video = YoutubeVideo.objects.all()[0]
+    video = YoutubeVideo.objects.all()
     slides = Slide.objects.all()
     context = {
         "main_menus": main_menus,
         "articles": articles,
-        "webcontent": webcontent,
-        "property_right": property_right,
+        "webcontent": webcontent[0],
+        "property_right": property_right[0],
         "ingredients_left": ingredients_left,
         "ingredients_right": ingredients_right,
         "efections_group1" : efections_group1,
         "efections_group2" : efections_group2,
         "product_photos" : product_photos,
-        "certificate" : certificate,
+        "certificates" : certificates,
         "retails" : retails,
-        "video": video,
+        "video": video[0],
         "slides": slides,
     }
     return render(request, 'home.html', context)
@@ -48,11 +48,11 @@ def home(request):
 def article_detail(request, pk):
     articleObj = Article.objects.get(slug=pk)
     articles = Article.objects.all()
-    webcontent = WebContent.objects.all()[0]
+    webcontent = WebContent.objects.all()
     main_menus = MainMenu.objects.all()
     context = {"article": articleObj,
                "articles": articles,
-               "webcontent": webcontent,
+               "webcontent": webcontent[0],
                "main_menus": main_menus,
                }
     return render(request, 'article-detail.html', context)
@@ -64,13 +64,13 @@ def checkqrcode(request, pk):
         productObj.save()
         articleObj = Article.objects.get(id = productObj.article_id)
         articles = Article.objects.all()
-        webcontent = WebContent.objects.all()[0]
+        webcontent = WebContent.objects.all()
         main_menus = MainMenu.objects.all()
         context = {
             "product": productObj,
             "article": articleObj,
             "articles": articles,
-            "webcontent": webcontent,
+            "webcontent": webcontent[0],
             "main_menus": main_menus,
         }
         return render(request, 'article-detail-checkqrcode.html', context)
@@ -106,6 +106,21 @@ def report(request):
         reports.append(row)
     context = {"reports":reports}
     return render(request, 'report.html', context)
+
+
+def orderProduct(request):
+    if request.method == "GET":
+        check_what = request.GET.get("check_what", None)
+        if check_what != None:
+            if Product.objects.filter(product_code = check_what).exists():
+                productObj = Product.objects.get(product_code = check_what)
+                return JsonResponse({"valid":True, "serial_no":productObj.serial_no}, status = 200)
+            else:
+                return JsonResponse({"valid":False}, status = 200)
+        else:
+            return render(request, '404.html')
+    return render(request, '404.html')
+
 
 def export(request):
     product_resource = ProductResource()

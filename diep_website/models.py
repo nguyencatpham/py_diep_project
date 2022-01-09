@@ -128,6 +128,7 @@ class ProductPhoto(models.Model):
     number = models.IntegerField(verbose_name="Thứ tự")
     photo = models.ImageField(upload_to="products",null=True, blank=True, verbose_name="Hình ảnh")
     photo_alt = models.CharField(max_length=500, null=True, blank=True, verbose_name="Mô tả ngắn (Hình ảnh)")
+    is_display = models.BooleanField(default=False, verbose_name="Hiển thị trang chủ")
     def __str__(self):
         return f'{self.number}'
     class Meta:
@@ -138,6 +139,7 @@ class Certificate(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True, verbose_name="Tiêu đề")
     photo = models.ImageField(upload_to="certifications",null=True, blank=True, verbose_name="Hình ảnh")
     photo_alt = models.CharField(max_length=500, null=True, blank=True, verbose_name="Mô tả ngắn (Hình ảnh)")
+    is_display = models.BooleanField(default=False, verbose_name="Hiển thị trên trang chủ")
     def __str__(self):
         return self.title
     class Meta:
@@ -236,7 +238,6 @@ class YoutubeVideo(models.Model):
     class Meta:
         verbose_name_plural = "15. Video Youtube"
         
-
 class SEO(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name="Tiêu đề")
     tags = models.TextField(verbose_name="Thẻ SEO")
@@ -257,4 +258,20 @@ class Report(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "99. Xem báo cáo"
+
+class Order(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    order_code = models.CharField(max_length=200, blank=True, null=True, verbose_name="Mã đơn hàng") 
+    release_product = models.ForeignKey(ReleaseProduct, on_delete=models.SET_NULL ,null=True, blank=True, verbose_name="Sản phẩm")
+    full_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="Tên khách hàng")
+    address = models.CharField(max_length=500, blank=True, null=True, verbose_name="Địa chỉ")
+    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="Số điện thoại")
+    email = models.EmailField(max_length=200, blank=True, null=True, verbose_name="Email")
+    notes = models.CharField(max_length=500, blank=True, null=True, verbose_name="Ghi chú")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian")
     
+    def __str__(self):
+        return self.full_name + " " + self.phone_number
+    class Meta:
+        verbose_name_plural = "100. Xem đơn hàng"
+        ordering = ['-created']

@@ -3097,7 +3097,7 @@ textarea:focus {
 }
 
 .section-description {
-    font-size: 14px;
+    font-size: 14.4px;
     color: #dedede;
     line-height: 1.8;
 }
@@ -4299,7 +4299,8 @@ textarea:focus {
 
 .section-slide {
     background: #292929;
-    padding-top: 100px;
+    /* padding-top: 50px; */
+    /* padding-bottom: 20px; */
 }
 
 .section-slide .section-heading {
@@ -4311,7 +4312,9 @@ textarea:focus {
 }
 
 .section-img+.section-slide {
-    padding-top: 55px;
+    /* padding-top: 55px; */
+    padding-top: 0px;
+
 }
 
 .section-img+.section-slide .section-heading {
@@ -4328,7 +4331,7 @@ textarea:focus {
     .section-bg_red__dark .img-inner {
         position: relative;
         overflow: hidden;
-        padding-bottom: 500px;
+        /* padding-bottom: 500px; */
         display: block;
     }
     .section-bg_red__dark .img-inner>div {
