@@ -206,7 +206,7 @@ class ReleaseProduct(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Ngày tạo")
     
     def __str__(self):
-        return self.article.name + ' - ' + self.name
+        return self.article.title + ' - ' + self.name
     
     def save(self, *args, **kwargs):
         cateObj = Category.objects.get(id = self.article.category.id)
