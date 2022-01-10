@@ -12,20 +12,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta itemprop="name" content="{{webcontent.web_title}}">
+    <meta name="MobileOptimized" content="320">{{seo.tags|safe}}
+    <!-- <meta itemprop="name" content="{{webcontent.web_title}}">
     <meta itemprop="description" content="{{webcontent.web_title}}">
     <meta itemprop="url" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="">
     <meta name="twitter:title" content="{{webcontent.web_title}}">
     <meta name="twitter:description" content="{{webcontent.web_title}}">
-    <meta name="twitter:image" content="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} ">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:site_name" content="{{webcontent.site_name}}">
     <meta property="og:title" content="{{webcontent.web_title}}">
-    <meta property="og:description" content="{{webcontent.web_title}}">
+    <meta property="og:description" content="{{webcontent.web_title}}"> -->
+    <meta name="twitter:image" content="{% static 'public/upload/logo/LOGO-HAMER-CANDY-NEW.png' %} ">
     <meta property="og:image" alt="{{webcontent.web_title}}" content="{% static 'public/upload/images/eng-banner-mobile.png' %} ">
     <meta name="msapplication-TileImage" content="{% static 'view/frontend/assets/images/cropped-LOGO-HAMER-CANDY-NEW-270x270.png' %}" />
     <meta name="description" content="{{webcontent.web_title}}">
@@ -135,14 +135,14 @@
                                             {{webcontent.banner_2}}</h2>
                                         <p class="text-inner_description">
                                             {{webcontent.banner_3}}</p>
-                                        <!-- <form action="POST" class="mt-4 row justify-content-center" id="checkCode"> -->
-                                        <form id="check_product_code_ignore" method="GET" class="mt-4 row justify-content-center">
-                                            <!-- {% csrf_token %} -->
+                                        <!-- <form action="POST" class="mt-4 row justify-content-center" id="checkCode"> id="check_product_code_ignore"-->
+                                        <form method="" class="mt-4 row justify-content-center">
+                                            <!-- {% csrf_token %} id='btnCheckProductCode' -->
                                             <div class="form-group col-md-8">
-                                                <input class="form-control d-none" required maxlength="100" name="checkCode" type="text" id="checkcode" placeholder="Please enter code...">
-                                                <button id='btnCheckProductCode' type="submit" class="button mt-3">
+                                                <!-- <input class="form-control d-none" required maxlength="100" name="checkCode" type="text" id="checkcode" placeholder="Please enter code..."> -->
+                                                <a href="javascript:void(0)" class="button mt-3">
                                                     Detail
-                                                </button>
+                                                </a>
                                             </div>
                                         </form>
                                     </div>
@@ -447,24 +447,35 @@
                         </div>
                     </div>
                     <div class="row row-col-15 row-cols-2 row-cols-md-4">
-                        {% for product_photo in product_photos %} {% if product_photo.photo %}
-                            <div class="col">
+                        {% for product_photo in product_photos %} {% if product_photo.photo %} {% if product_photo.is_display %}
+                        <div class="col">
+                            <a href="{{product_photo.photo.url}}" class="image-link img-inner position-relative overflow-hidden">
+                                <div style="background-image: url({{product_photo.photo.url}});"></div>
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="col d-none">
+                            <a href="{{product_photo.photo.url}}" class="image-link img-inner position-relative overflow-hidden">
+                                <div style="background-image: url({{product_photo.photo.url}});"></div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        <!-- <div class="col">
                                 <a href="{{product_photo.photo.url}}" class="image-link img-inner position-relative overflow-hidden">
-                                    {% if product_photo.is_display %}
-                                        <div style="background-image: url({{product_photo.photo.url}});"></div>
-                                    {% else %}
-                                        <div style="background-image: url({{product_photo.photo.url}}); display:none !important;"></div>
-                                    {% endif %}
-                                </a>
-                            </div>
-                            {% else %}
-                            <div class="col">
-                                <a href="{% static 'images/default.jpg' %}" class="image-link img-inner position-relative overflow-hidden">
-                                    <div style="background-image: url(/static/images/default.jpg)"></div>
-                                </a>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+                                        {% if product_photo.is_display %}
+                                            <div style="background-image: url({{product_photo.photo.url}});"></div>
+                                        {% else %}
+                                            <div style="background-image: url({{product_photo.photo.url}}); display:none !important; width: 0px !important; height: 0px !important;"></div>
+                                        {% endif %}
+                                    </a>
+                            </div> -->
+                        {% else %}
+                        <div class="col">
+                            <a href="{% static 'images/default.jpg' %}" class="image-link img-inner position-relative overflow-hidden">
+                                <div style="background-image: url(/static/images/default.jpg)"></div>
+                            </a>
+                        </div>
+                        {% endif %} {% endfor %}
                     </div>
                 </div>
             </div>
@@ -524,21 +535,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6 d-flex">
-                        {% for certificate in certificates %}
-                            {% if certificate.photo %}
-                            <a href="{{certificate.photo.url}}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
+                        {% for certificate in certificates %} {% if certificate.photo %}
+                        <a href="{{certificate.photo.url}}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
                                 {% if certificate.is_display %}
                                     <img class="img-fluid" src="{{certificate.photo.url}}" alt="{{certificate.photo_alt}}">
                                 {% else %}
                                     <img class="img-fluid d-none" src="{{certificate.photo.url}}" alt="{{certificate.photo_alt}}">
                                 {% endif %}
-                            </a>
-                            {% else %}
-                            <a href="{% static 'images/default.jpg' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
-                                <div style="background-image:url(static/images/default.jpg)"></div>
-                            </a>
-                            {% endif %}
-                        {% endfor %}
+                            </a> {% else %}
+                        <a href="{% static 'images/default.jpg' %}" class="img-inner position-relative overflow-hidden lazy image-chungnhan">
+                            <div style="background-image:url(static/images/default.jpg)"></div>
+                        </a>
+                        {% endif %} {% endfor %}
                         <!-- <div class="section-heading text-center mt-3 mt-md-0">
                             {{certificate.title}}</div> -->
                     </div>
@@ -582,24 +590,23 @@
                             <div class="section-description text-left">
                                 for wholesale
                             </div>
-                            <form class="form-landing" id="form-order" action="">
+                            <form class="form-landing" id="form-order" action="{% url 'orderProduct' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="mb-3">
-                                    <input type="text" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter fullname')" 
-                                        autocomplete="off" class="form-control" name="full_name" id=full_name "
+                                    <input type="text" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter fullname')" autocomplete="off" class="form-control" name="full_name" id=full_name "
 										placeholder=" Fullname... ">
 								</div>
 								<div class=" mb-3 ">
 									<input type=" text " required oninput=" setCustomValidity( '' ) "
 										oninvalid=" this.setCustomValidity( 'Please enter address' ) " autocomplete=" off "
-										class=" form-control " name="address" id="address" placeholder=" Address... ">
+										class=" form-control " name="address " id="address " placeholder=" Address... ">
 								</div>
 								<div class=" row row-5 ">
 									<div class=" col-md-6 ">
 										<div class=" mb-3 ">
 											<input type=" tel " required oninput=" setCustomValidity( '' ) "
 												oninvalid=" this.setCustomValidity( 'Please enter phone' ) "
-												autocomplete=" off " class=" form-control " name="phone_number" id="phone_number"
+												autocomplete=" off " class=" form-control " name="phone_number " id="phone_number "
 												minlength=" 10 " maxlength=" 15 " placeholder=" Phone ">
 										</div>
 									</div>
@@ -607,17 +614,18 @@
 										<div class=" mb-3 ">
 											<input type=" email " required oninput=" setCustomValidity( '' ) "
 												oninvalid=" this.setCustomValidity( 'Please enter email' ) "
-												autocomplete=" off " class=" form-control " name="email" id="email"
+												autocomplete=" off " class=" form-control " name="email " id="email "
 												placeholder=" Email... ">
 										</div>
 									</div>
 								</div>
 
 								<div class=" mb-3 ">
-									<select required name=" id_sanpham " id="release_product_id" class=" form-select ">
-										<option value=" ">Please choose product</option>
+									<!-- <select required name="retail_id " id="release_product_id " class=" form-select "> -->
+                                    <select required name="id_sanpham " id="release_product_id " class=" form-select ">
+										<!-- <option value=" ">Please choose product</option> -->
                                         {% for retail in retails %}
-                                        <option value="{{retail.name}} ">{{retail.name}}</option>  
+                                        <option value="{{retail.id}} ">{{retail.name}}</option>
                                         {% endfor %}
 										<!-- <option value=" 2007 ">3240USD/CARTON/864 CANDY</option>
 										<option value=" 2006 ">2528USD/CARTON/972 CANDY</option>
@@ -627,141 +635,13 @@
 									</select>
 								</div>
 								<div class=" mb-3 ">
-									<textarea name="notes" class=" form-control " id="notes" rows=" 5 "
+									<textarea name="notes " class=" form-control " id="notes " rows=" 5 "
 										placeholder=" Notes... "></textarea>
 								</div>
 								<div class=" text-center ">
-									<button id="btnOrder" type=" submit ">Buy now</button>
+									<button id="btnOrder " type=" submit ">Buy now</button>
 								</div>
 							</form>
-                            {% block javascript %}
-                                <script>
-                                    function btnlinkload(curren, text) {
-                                        if (!text) {
-                                            text = "Vui lòng đợi";
-                                        }
-                                        curren.html(text + ' <i class="fa fa-spinner fa-spin uk-icon-spinner uk-icon-spin"></i>');
-                                        curren.prop("disabled", true);
-                                    }
-
-                                    function btnlinkthanhcong(curren, text) {
-                                        curren.html(text);
-                                        curren.prop("disabled", false);
-                                    }
-                                    
-                                    $("#form-order").submit(function(e) {
-                                        e.preventDefault();
-                                        // get the nickname
-                                        var full_name = document.getElementById('full_name').value;
-                                        var address = document.getElementById('address').value;
-                                        var phone_number = document.getElementById('phone_number').value;
-                                        var email = document.getElementById('email').value;
-                                        var release_product_id = document.getElementById('release_product_id').value;
-                                        var notes = document.getElementById('notes').value;
-                                        
-                                        console.log(full_name);
-
-                                        btnlinkload($("#btnOrder"), 'Please wait');
-                                        // GET AJAX request
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: "{% url 'orderProduct' %}",
-                                            data: {
-                                                "check_what": check_what
-                                            },
-                                            success: function(response) {
-                                                // if not valid user, alert the user
-                                                if (response["valid"]) {
-                                                    //alert("Check successful");
-                                                    let _html = ` <div class='popupCheckCode-header'>
-                                                                            <p>
-                                                                                This is an original product of Sino - USA Collaboration
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class='popupCheckCode-body'>
-                                                                            <div class='popupCheckCode-seri'>
-                                                                                Serial: ${response["serial_no"]}
-                                                                            </div>
-                                                                            <div class='popupCheckCode-content'>
-                                                                                <div class='popupCheckCode-content_column'>
-                                                                                    <div class='title'>
-                                                                                        <i class='fal fa-qrcode'></i>
-                                                                                        Code scans
-                                                                                    </div>
-                                                                                    <div class='number'>
-                                                                                        1
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class='popupCheckCode-content_column'>
-                                                                                    <div class='title'>
-                                                                                        <i class='fal fa-user-friends'></i>
-                                                                                        People scans
-                                                                                    </div>
-                                                                                    <div class='number'>
-                                                                                        1
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>`;
-
-                                                    Swal.fire({
-                                                        icon: 'success',
-                                                        html: _html,
-                                                        showConfirmButton: false,
-                                                        customClass: 'swalPopUpCheckCode',
-                                                    });
-                                                    btnlinkthanhcong($("#btnCheckProductCode"), 'Check');
-                                                } else {
-                                                    //alert("Check error");
-                                                    let _html = `<div class='popupCheckCode-header'>
-                                                                        <p class='py-1'>
-                                                                            Warning: This product could be fake or counterfeit because this is not a product of Sino - USA Collaboration
-                                                                        </p>
-                                                                        <p class='py-0'>---</p>
-                                                                        <p class='py-1'>Please send email to hamer2uchecking@gmail.com to support as soon as possible</p>
-                                                                        <p class='pt-1 pb-2'>Thank you !</p>
-                                                                    </div>
-                                                                    <div class='popupCheckCode-body'>
-                                                                        <div class='popupCheckCode-seri'>
-                                                                        Serial: 0
-                                                                        </div>
-                                                                        <div class='popupCheckCode-content'>
-                                                                            <div class='popupCheckCode-content_column'>
-                                                                                <div class='title'>
-                                                                                    <i class='fal fa-qrcode'></i>
-                                                                                    Code scans
-                                                                                </div>
-                                                                                <div class='number'>
-                                                                                    0
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class='popupCheckCode-content_column'>
-                                                                                <div class='title'>
-                                                                                    <i class='fal fa-user-friends'></i>
-                                                                                    People scans
-                                                                                </div>
-                                                                                <div class='number'>
-                                                                                    0
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>`;
-                                                    Swal.fire({
-                                                        icon: 'error',
-                                                        html: _html,
-                                                        showConfirmButton: false,
-                                                        customClass: 'swalPopUpCheckCode error',
-                                                    });
-                                                    btnlinkthanhcong($("#btnOrder"), 'Buy now');
-                                                }
-                                            },
-                                            error: function(response) {
-                                                console.log(response);
-                                            }
-                                        })
-                                    })
-                                </script>
-                            {% endblock javascript %}
 						</div>
 						<div class=" col-md-2 "></div>
 						<div class=" col-md-5 mt-3 mt-md-0 ">

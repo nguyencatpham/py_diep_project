@@ -80,4 +80,7 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = ('name', 'url_as_link')
 admin.site.register(Report, ReportAdmin)
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('retail_product', 'order_code' , 'full_name', 'phone_number','address', 'email', 'notes', 'created')
+admin.site.register(Order, OrderAdmin)
 # admin.site.register(Video)

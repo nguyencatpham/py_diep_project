@@ -239,12 +239,17 @@ class YoutubeVideo(models.Model):
         verbose_name_plural = "15. Video Youtube"
         
 class SEO(models.Model):
+    GROUP = (
+        ('seo_home', 'SEO Trang chủ'),
+        ('seo_article', 'SEO Bài viết'),
+    )
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name="Tiêu đề")
     tags = models.TextField(verbose_name="Thẻ SEO")
+    group = models.CharField(max_length=200, verbose_name="Nhóm", choices=GROUP)
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name_plural = "98. SEO"
+        verbose_name_plural = "97. SEO"
 
 class Report(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True ,verbose_name="Báo cáo")
@@ -257,12 +262,12 @@ class Report(models.Model):
     def __str__(self):
         return self.name
     class Meta:
-        verbose_name_plural = "99. Xem báo cáo"
+        verbose_name_plural = "98. Xem báo cáo"
 
 class Order(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     order_code = models.CharField(max_length=200, blank=True, null=True, verbose_name="Mã đơn hàng") 
-    release_product = models.ForeignKey(ReleaseProduct, on_delete=models.SET_NULL ,null=True, blank=True, verbose_name="Sản phẩm")
+    retail_product = models.ForeignKey(RetailProduct, on_delete=models.SET_NULL ,null=True, blank=True, verbose_name="Sản phẩm bán lẻ")
     full_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="Tên khách hàng")
     address = models.CharField(max_length=500, blank=True, null=True, verbose_name="Địa chỉ")
     phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="Số điện thoại")
@@ -271,7 +276,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian")
     
     def __str__(self):
-        return self.full_name + " " + self.phone_number
+        return self.full_name + " - " + self.phone_number
     class Meta:
-        verbose_name_plural = "100. Xem đơn hàng"
+        verbose_name_plural = "99. Xem đơn hàng"
         ordering = ['-created']
