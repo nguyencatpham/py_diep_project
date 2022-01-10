@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container py-20 mx-auto mt-4 flex flex-col">
+<div class="container py-20 mx-auto mt-4 flex flex-col h-screen">
     <h1 class="text-center text-2xl">THANK YOU FOR YOUR ORDER</h1>
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-5">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -45,10 +45,10 @@
                                 {{order.full_name}}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm items-center text-gray-500">
-                                {{order.address}}
+                                {{order.phone_number}}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm items-center text-gray-500">
-                                {{order.phone_number}}
+                                {{order.address}}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm items-center text-gray-500">
                                 {{order.email}}
