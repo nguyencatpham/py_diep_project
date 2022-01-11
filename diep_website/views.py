@@ -5,64 +5,68 @@ from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from .resources import ProductResource
 
-from django.contrib.auth.decorators import login_required
-
 # Create your views here.
 def home(request):
-    articles = Article.objects.all()
-    main_menus = MainMenu.objects.all()
-    webcontent = WebContent.objects.all()
-    property_right = PropertyRight.objects.all()
-    
-    ingredients_left = Ingredient.objects.filter(display_type='left')
-    ingredients_right = Ingredient.objects.filter(display_type='right')
-    
-    efections_group1 = Effection.objects.filter(group='one')
-    efections_group2 = Effection.objects.filter(group='two')
-    
-    product_photos = ProductPhoto.objects.all()
-    
-    certificates = Certificate.objects.all()
-    retails = RetailProduct.objects.all()
-    
-    video = YoutubeVideo.objects.all()
-    slides = Slide.objects.all()
-    seo = SEO.objects.filter(group='seo_home')
-    context = {
-        "main_menus": main_menus,
-        "articles": articles,
-        "webcontent": webcontent[0],
-        "property_right": property_right[0],
-        "ingredients_left": ingredients_left,
-        "ingredients_right": ingredients_right,
-        "efections_group1" : efections_group1,
-        "efections_group2" : efections_group2,
-        "product_photos" : product_photos,
-        "certificates" : certificates,
-        "retails" : retails,
-        "video": video[0],
-        "slides": slides,
-        "seo": seo[0]
-    }
-    return render(request, 'home.html', context)
+    try:
+        articles = Article.objects.all()
+        main_menus = MainMenu.objects.all()
+        webcontent = WebContent.objects.all()
+        property_right = PropertyRight.objects.all()
+        
+        ingredients_left = Ingredient.objects.filter(display_type='left')
+        ingredients_right = Ingredient.objects.filter(display_type='right')
+        
+        efections_group1 = Effection.objects.filter(group='one')
+        efections_group2 = Effection.objects.filter(group='two')
+        
+        product_photos = ProductPhoto.objects.all()
+        
+        certificates = Certificate.objects.all()
+        retails = RetailProduct.objects.all()
+        
+        video = YoutubeVideo.objects.all()
+        slides = Slide.objects.all()
+        seo = SEO.objects.filter(group='seo_home')
+        context = {
+            "main_menus": main_menus,
+            "articles": articles,
+            "webcontent": webcontent[0],
+            "property_right": property_right[0],
+            "ingredients_left": ingredients_left,
+            "ingredients_right": ingredients_right,
+            "efections_group1" : efections_group1,
+            "efections_group2" : efections_group2,
+            "product_photos" : product_photos,
+            "certificates" : certificates,
+            "retails" : retails,
+            "video": video[0],
+            "slides": slides,
+            "seo": seo[0]
+        }
+        return render(request, 'home.html', context)
+    except:
+        return render(request, '404.html')
 
 def article_detail(request, pk):
-    articleObj = Article.objects.get(slug=pk)
-    articles = Article.objects.all()
-    webcontent = WebContent.objects.all()
-    main_menus = MainMenu.objects.all()
-    seo = SEO.objects.filter(group='seo_article')
-    context = {"article": articleObj,
-               "articles": articles,
-               "webcontent": webcontent[0],
-               "main_menus": main_menus,
-               "seo": seo[0]
-               }
-    return render(request, 'article-detail.html', context)
+    if Article.objects.filter(slug=pk).exists():
+        articleObj = Article.objects.get(slug=pk)
+        articles = Article.objects.all()
+        webcontent = WebContent.objects.all()
+        main_menus = MainMenu.objects.all()
+        seo = SEO.objects.filter(group='seo_article')
+        context = {"article": articleObj,
+                "articles": articles,
+                "webcontent": webcontent[0],
+                "main_menus": main_menus,
+                "seo": seo[0]
+                }
+        return render(request, 'article-detail.html', context)
+    else:
+        return render(request, '404.html')
  
 def checkqrcode(request, pk):
-    productObj = Product.objects.get(product_code = pk)
-    if productObj:
+    if Product.objects.filter(product_code = pk).exists():
+        productObj = Product.objects.get(product_code = pk)
         productObj.scanned = True
         productObj.save()
         articleObj = Article.objects.get(id = productObj.article_id)
@@ -81,7 +85,7 @@ def checkqrcode(request, pk):
         return render(request, 'article-detail-checkqrcode.html', context)
     else:
         return render(request, '404.html')
-
+# Ignore
 def checkProductCode(request):
     if request.method == "GET":
         check_what = request.GET.get("check_what", None)
@@ -112,7 +116,6 @@ def report(request):
     context = {"reports":reports}
     return render(request, 'report.html', context)
 
-
 def orderProduct(request):
     if (request.method == "POST"):
         full_name = request.POST.get('full_name')
@@ -134,15 +137,15 @@ def orderProduct(request):
         
         order.save()
         
-        redirect_url = "successfully/%s" % order.id
+        redirect_url = "successfully/%s" % order.order_code
         return HttpResponseRedirect(redirect_url)
     else:
         # return render(request, '404.html')
         return redirect ('page_not_found')
 
 def successfully(request, pk):
-    order = Order.objects.get(id=pk)
-    if order:
+    if  Order.objects.filter(order_code = pk).exists():
+        order = Order.objects.get(order_code = pk)
         retail_product = RetailProduct.objects.get(id=order.retail_product.id)
         articles = Article.objects.all()
         webcontent = WebContent.objects.all()
