@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: hamerapp-web
+    stop_signal: SIGINT
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    volumes:
+      - ./:/opt/app
+    ports:
+      - 8000:8000
+      - 8010:8010
+      - 8020:8020
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    image: postgres:13.0-alpine
+    container_name: hamerapp-db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+volumes:
+  postgres_data:
