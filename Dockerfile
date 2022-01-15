@@ -41,16 +41,16 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 # copy source and install dependencies
 RUN mkdir -p /opt/app
-RUN mkdir -p /opt/app/pip_cache
 RUN mkdir -p /opt/app/hamerapp
-COPY requirements.txt start-server.sh /opt/app/
+RUN mkdir -p /opt/app/hamerapp/pip_cache
+COPY requirements.txt start-server.sh /opt/app/hamerapp
 # COPY .pip_cache /opt/app/pip_cache/
 COPY . /opt/app/hamerapp/
-WORKDIR /opt/app
-RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
-RUN chown -R www-data:www-data /opt/app
+WORKDIR /opt/app/hamerapp/
+RUN pip install -r requirements.txt --cache-dir /opt/app/hamerapp/pip_cache
+RUN chown -R www-data:www-data /opt/app/hamerapp
 
 # start server
-EXPOSE 8020
+EXPOSE 8000
 STOPSIGNAL SIGTERM
 CMD ["/opt/app/start-server.sh"]
